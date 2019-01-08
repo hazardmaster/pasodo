@@ -34,8 +34,9 @@
                     <h1>View Client information</h1>
                     <?php
                         echo message();
+                        echo SuccessMessage();
                     ?>
-                    <form style="form-control" action="frontend.php" method="post">
+                    <form style="form-control" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                         <div class="form-group">
                         <input type="text" name="clientID" id="clientID" placeholder="Enter client ID" >                        
                         <input class="btn btn-info btn-large" type="submit" name="submit" value="view client info"  >

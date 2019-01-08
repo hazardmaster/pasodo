@@ -1,12 +1,15 @@
-<!DOCTYPE>
+<?php require_once("include/sessions.php"); 
+$conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
 
+<!DOCTYPE>
 <html>
     <head>
-        <title>Categories</title>
+        <title>Categories</title>        
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/backend.css">
+        <link rel="stylesheet" href="css/clientForm.css">
         <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>        
+        <script src="js/bootstrap.min.js"></script>
+        
     </head>
     <body>
         
@@ -30,7 +33,7 @@
                         ?> </div>
                     <div>
                         <!--Form for entering client information-->
-                        <form action="processclient.php" method="post">                        
+                        <form action="processes/processclient.php" method="post" onsubmit="return formValidation()"  name="clientForm" id="clientForm">                        
                             <fieldset>
 
                                 <!--Client ID-->
@@ -79,8 +82,7 @@
                                                             } 
                                                               ?>
                                     </select><br><br> 
-                                </div>
-                               
+                                </div>                               
 
                                 <!--Client Image for Authentication of Information-->
                                 <div class="form-group">
@@ -93,10 +95,53 @@
                                 <br>
                                 
                             </fieldset>
+                            
+                            <script>
+                                function formValidation(){
+                                    // Validate client ID
+                                    return confirm("Confirm if you want to submit");
+                                    var clientId = document.getElementById("clientId").value;
+                                    var toString = clientId.toString();
+                                    var idLength = toString.length;
+                                    if(idLength != 8){
+                                        alert("This ID is not valid");
+                                        return false;
+                                    }else{
+                                        // Validate client names
+                                        var firstName = document.getElementById("firstName").value;
+                                        var middleName = document.getElementById("middleName").value;
+                                        var lastName = document.getElementById("lastName").value;
+                                        var firstNameLength = firstName.length;
+                                        var middleNameLength = middleName.length;
+                                        var lastNameLength = lastName.length;
+
+                                            //check if client names are alphabet values. Return false if !=
+                                            if(firstNameLength > 2){
+                                                if(middleNameLength > 2 ){
+                                                    if(lastNameLength > 2){
+                                                        return true;
+                                                    }else{
+                                                        alert(" last name cannot be less than 3 letters");
+                                                    }
+                                                }  else{
+                                                    alert("middle name cannot be less than 3 letters");
+                                                }  
+                                             }else{
+                                                alert("first name cannot be less than 3 letters");
+                                                return false;
+                                            } 
+                                        }
+                                                                      
+                                }
+
+                            </script>
                         </form>
                     </div>
                 </div><!--ending of col 10-->
             </div><!-- Ending of row-->
+
+            
+
         </div><!-- ending of container-->
         <div id="footer">
             <hr><p>Brain Behind | Oscar Hazard | &copy;2018  --- All rights reserved</p>
