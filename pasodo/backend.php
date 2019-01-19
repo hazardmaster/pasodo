@@ -4,24 +4,45 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
 <!DOCTYPE>
 <html>
     <head>
-        <title>Categories</title>        
+        <title>Admin Back End</title>        
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/clientForm.css">
         <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        
+        <script src="js/bootstrap.min.js"></script>        
     </head>
     <body>
-        
+        <!--Top navigation bar -->
+        <div class="navbar navbar-inverse">
+                <div class="navbar-header" style="padding: 0px">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <center>
+                        <a class="" href="index.php"><img src="img/pasodo5.jpg" alt="" width=150px height="full" /></a>
+                    </center>
+                        
+                </div>
+                <div class="navbar-collapse collapse ">
+                    <ul class="nav navbar-nav">
+                            
+                        <li><a href="index.php">Loan Officer</a></li>
+                            
+                        <li><a href="backend.php">Admin</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        <!--The Body part -->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-2">
-                     <span><a href="backend.php" ><img src="img/pasodo5.jpg" style="margin-top:10px; margin-bottom:10px" width=full height=55px></a></span>
                     <!--<h3 style="color:white">Super Admin!!!</h3>-->
                     <ul id="side_menu" class="nav nav-pills nav-stacked">
                         <li class="active"><a href="backend.php">Add new client</a></li>
                         <li><a href="categories.php">View Categories</a></li>
-                        <li><a href="">Approve transactions</a></li>
+                        <li><a href="transactionapproval.php">Approve transactions</a></li>
                         <li><a href="">Manage administrators</a></li>
                         <li><a href="index.php">Front end</a></li>
                     </ul>
@@ -33,7 +54,7 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                         ?> </div>
                     <div>
                         <!--Form for entering client information-->
-                        <form action="processes/processclient.php" method="post" onsubmit="return formValidation()"  name="clientForm" id="clientForm">                        
+                        <form action="processclient.php" method="post" onsubmit="formValidation()"  name="clientForm" id="clientForm">                        
                             <fieldset>
 
                                 <!--Client ID-->
@@ -44,10 +65,21 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
 
                                 <!--Client Full names-->
                                 <div class="form-group">
-                                    <label for="name">Client Name:</label><br>
-                                    <input class="" type="text" name="firstName" id="firstName" placeholder="First Name" value="Jane">
-                                    <input class="" type="text" name="middleName" id="middleName" placeholder="Middle Name" value="Hazard">
-                                    <input class="" type="text" name="lastName" id="lastName" placeholder="Last Name" value="Doe">
+                                    <label for="name">Client Name:</label><br><br>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label for="firstName">First name:</label>
+                                            <input class="" type="text" name="firstName" id="firstName" placeholder="First Name" value="Jane">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label for="middleName">Middle name:</label>
+                                            <input class="" type="text" name="middleName" id="middleName" placeholder="Middle Name" value="Hazard">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label for="lastName">Last name:</label>
+                                            <input class="" type="text" name="lastName" id="lastName" placeholder="Last Name" value="Doe">
+                                        </div>
+                                    </div>                            
                                 </div><br><br> 
                                
                                <!--Client Phone number-->
@@ -97,9 +129,8 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                             </fieldset>
                             
                             <script>
-                                function formValidation(){
+                                function formValidation(){                                    
                                     // Validate client ID
-                                    return confirm("Confirm if you want to submit");
                                     var clientId = document.getElementById("clientId").value;
                                     var toString = clientId.toString();
                                     var idLength = toString.length;
@@ -119,7 +150,7 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                                             if(firstNameLength > 2){
                                                 if(middleNameLength > 2 ){
                                                     if(lastNameLength > 2){
-                                                        return true;
+                                                        return confirm("Confirm if you want to submit");
                                                     }else{
                                                         alert(" last name cannot be less than 3 letters");
                                                     }
@@ -138,14 +169,13 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                         </form>
                     </div>
                 </div><!--ending of col 10-->
-            </div><!-- Ending of row-->
-
-            
+            </div><!-- Ending of row-->            
 
         </div><!-- ending of container-->
-        <div id="footer">
+
+        <div id="footer" style="position: relative; bottom: 0; width: 1360px;">
             <hr><p>Brain Behind | Oscar Hazard | &copy;2018  --- All rights reserved</p>
-            <a style="color:white; text-decoration: none; cursor:pointer; fontweight:bold;" href="http://pasodo.com">Pasodo</a>
+            <a style="color:white; text-decoration: none; cursor:pointer; fontweight:bold;" href="index.php">Pasodo</a>
             <p>This site is only for use by PASODO finance group. All rights reseved. No one is allowed to make a copy of this site.</p>
         </div>
         <div style="height: 10px; background: #27AAE1;"></div>

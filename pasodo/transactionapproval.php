@@ -1,11 +1,14 @@
 <?php $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
-<?php require_once("include/sessions.php") ?>
-
+<?php require_once("include/sessions.php");?>
+<?php if(isset($_POST["submitborrowed"])){
+        $category = $_POST["Category"];
+        echo $category;}
+    ?>
 <!DOCTYPE>
 
 <html>
     <head>
-        <title>Back end</title>
+        <title>Loan Approval</title>
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/backend.css">
         <script src="js/jquery.min.js"></script>
@@ -13,7 +16,6 @@
         
     </head>
     <body>
-        <!--Top navigation bar -->
         <div class="navbar navbar-inverse">
                 <div class="navbar-header" style="padding: 0px">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -31,87 +33,75 @@
                             
                         <li><a href="index.php">Loan Officer</a></li>
                             
-                        <li><a href="backend.php">Admin</a></li>
+                        <li><a href="backend.php">Admin</a></li>                    
 
                     </ul>
                 </div>
             </div>
-        <!--The Body part -->
+        
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-2">
+                    <!--<h3 style="color:white">Super Admin!!!</h3>-->
                     <ul id="side_menu" class="nav nav-pills nav-stacked">
                         <li><a href="backend.php">Add new client</a></li>
-                        <li class = "active"><a href="categories.php">View Categories</a></li>
-                        <li><a href="transactionapproval.php">Approve transactions</a></li>
+                        <li><a href="categories.php">View Categories</a></li>
+                        <li class="active"><a href="transactionapproval.php">Approve transactions</a></li>
                         <li><a href="">Manage administrators</a></li>
+                        <li><a href="index.php">Front end</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-10">
-                    <h1 style="color: #000000">View Categories</h1>
-                    <div> <?php echo message(); 
-                                echo SuccessMessage();
-                        ?> </div>
+                    <h1 style="color: #000000">Please Approve the following Loans</h1>
                     <?php
-                        //Show categories on drop down
-                    if($conn->connect_error){
-                        die("Connection failed:" .$conn->connect_error);
-                    }
-                        $sql = "SELECT * FROM category";
-                        $result = $conn->query($sql);
-                        if($result->num_rows > 0){
-                            //output of each row                             
-                                ?>
+                        echo message();
+                        echo SuccessMessage();
+                    ?>
 
-                                <form method="post" action="" id="form">
-                                    <select onchange="document.getElementById("form").Submit">
-                                        <?php
-                                        while ($row = $result->fetch_assoc()){
-                                            $catID = $row['ID'];
-                                            $catname = $row['name']; ?>
-                                        <option name="catname" value="<?php echo $catID; ?>"><?php 
-                                                    echo $catname;
-                                                ?>                                                    
-                                        </option>
-                                       <?php } ?>
-                                    </select>  
-                                    <input style="display: none;" type="submit" >                                  
-                                </form>
-
-                           <?php } ?> 
-                        
-                    
-                    
-                   <!--  -->
-                    
+                    <!--Input CLient Loan Information in a table for approval-->
                     <div class="table-responsive">
                          <table class="table table-borderless table-dark">
                             <thead class="thead-light" style="color: #000000">
                                 <th>ID NUMBER</th>
                                 <th>NAME</th>
-                                <th>PHONE NUMBER</th>
-                                <th>Date Added</th>
+                                <th>Amount</th>
+                                <th>Loan Officer Notes</th>
                                 <th>Action</th>
                             </thead>
                              <?php     
-                                    $sql = "SELECT * FROM client2 WHERE category_id = '1'";
+                                    $sql = "SELECT * FROM loan WHERE status = 'pending'";
                                     $result = $conn->query($sql);
-
                                     if($result->num_rows > 0){
                                         while($datarows = $result->fetch_assoc()){
                                             $clientID = $datarows["clientID"];
-                                            $F_name = $datarows["firstName"];
-                                            $L_name = $datarows["lastName"];
-                                            $date = $datarows["created_at"];
-                                            $phone = $datarows["phone"];
+                                            $amount = $datarows["amount"];
+                                            $notes = $datarows["notes"];
+
+                                            
+
                                          ?>
                                         <tr style="color: #000000">
                                             <td><?php echo $clientID ?></td>
-                                            <td><?php echo $F_name."  ". $L_name ?></td>
-                                            <td><?php echo $phone ?></td>
-                                            <td><?php echo $date ?></td>
-                                            <td><a href="delete.php?<?php echo $ID?>"><span class="btn btn-danger">Delete</span></a></td>
-                                         </tr>
+                                            <td>
+                                                <?php
+                                                //Looking for client's name
+                                                $sql = "SELECT * FROM client2 WHERE clientID = '$clientID' ";
+                                                $result = $conn->query($sql);
+                                                while ($datarows = $result->fetch_assoc()) {
+                                                    $firstName = $datarows['firstName'];
+                                                    $middleName = $datarows['middleName'];
+                                                    $lastName = $datarows['lastName'];
+                                                    echo $firstName."  ". $lastName ;
+                                                }        ?>                                      
+                                            </td>
+                                            <td><?php echo $amount ?></td>
+                                            <td><?php echo $notes ?></td>
+                                            <td>
+                                                <a type="button" href="">Approve</a>
+                                                
+                                                <a type="button" href="delete.php">Disapprove</a>
+                                            </td>
+                                        </tr>
                                          <?php  
                                         }
                                     }else{
@@ -122,6 +112,7 @@
                                  ?>                       
                         </table>
                     </div>
+                                     
                 </div>
             </div><!-- Ending of row-->
         </div><!-- ending of container-->
