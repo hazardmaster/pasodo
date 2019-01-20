@@ -1,10 +1,10 @@
 <?php require_once("include/sessions.php"); 
 $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
-
+?>
 <!DOCTYPE>
 <html>
     <head>
-        <title>Admin Back End</title>        
+        <title>Edit</title>        
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/clientForm.css">
         <script src="js/jquery.min.js"></script>
@@ -40,7 +40,7 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                 <div class="col-sm-2">
                     <!--<h3 style="color:white">Super Admin!!!</h3>-->
                     <ul id="side_menu" class="nav nav-pills nav-stacked">
-                        <li class="active"><a href="backend.php">Add new client</a></li>
+                        <li><a href="backend.php">Add new client</a></li>
                         <li><a href="categories.php">View Categories</a></li>
                         <li><a href="transactionapproval.php">Approve transactions</a></li>
                         <li><a href="">Manage administrators</a></li>
@@ -48,19 +48,36 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                     </ul>
                 </div>
                 <div class="col-sm-10">
-                    <h1>Add New Client</h1>
+                    <h1>Edit Client Information</h1>
                     <div> <?php echo message(); 
                                 echo SuccessMessage();
                         ?> </div>
                     <div>
+                    <!--Pick Client data as saved in the database-->
+                        <?php
+                            $ID = $_GET["id"];
+                            $sql = "SELECT * FROM client2 WHERE ID = '$ID' ";
+                            $result = $conn->query($sql);
+                            while($datarows = $result->fetch_assoc()){
+                                $clientID = $datarows["clientID"];
+                                $firstName = $datarows["firstName"];
+                                $middleName = $datarows["middleName"];
+                                $lastName = $datarows["lastName"];
+                                $phone = $datarows["phone"]; 
+                                $gender = $datarows["gender"];
+                                $category = $datarows["category_id"];
+                                $image = $datarows["image"];
+
+                                ?>    
+
                         <!--Form for entering client information-->
-                        <form action="processclient.php" method="post" onsubmit="formValidation()"  name="clientForm" id="clientForm">                        
+                        <form action="processclient.php"  name="clientForm" id="clientForm" onsubmit="formValidation()">                        
                             <fieldset>
 
                                 <!--Client ID-->
                                 <div class="form-group">
                                     <label for="id_number">ID Number:</label>
-                                    <input class="form-control" value="23547689" type="text" name="clientId" id="clientId" placeholder="ID number" >
+                                    <input class="form-control" value="<?php echo $clientID; ?>" type="text" name="clientId" id="clientId"  >
                                 </div><br><br> 
 
                                 <!--Client Full names-->
@@ -69,15 +86,15 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <label for="firstName">First name:</label>
-                                            <input class="" type="text" name="firstName" id="firstName" placeholder="First Name" value="Jane">
+                                            <input class="" type="text" name="firstName" id="firstName" value="<?php echo $firstName; ?>">
                                         </div>
                                         <div class="col-sm-4">
                                             <label for="middleName">Middle name:</label>
-                                            <input class="" type="text" name="middleName" id="middleName" placeholder="Middle Name" value="Hazard">
+                                            <input class="" type="text" name="middleName" id="middleName" value="<?php echo $middleName; ?>">
                                         </div>
                                         <div class="col-sm-4">
                                             <label for="lastName">Last name:</label>
-                                            <input class="" type="text" name="lastName" id="lastName" placeholder="Last Name" value="Doe">
+                                            <input class="" type="text" name="lastName" id="lastName" value="<?php echo $lastName; ?>">
                                         </div>
                                     </div>                            
                                 </div><br><br> 
@@ -85,21 +102,21 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                                <!--Client Phone number-->
                                 <div class="form-group">
                                     <label for="phonenumber">Phone number:</label>
-                                    <input class="form-control" type="text" name="phoneNumber" id="phoneNumber" value="0724657487" placeholder="Phone number">
+                                    <input class="form-control" type="text" name="phoneNumber" id="phoneNumber" value="<?php echo $phone; ?>" >
                                 </div><br><br> 
 
                                 <!--Client Gender-->
                                 <div class="form-group">
                                     <label for="gender">Gender:</label><br>
-                                    <input type="radio" name="gender" value="male"> Male<br>
-                                    <input type="radio" name="gender" value="female"> Female<br>
-                                    <input type="radio" name="gender" value="other"> Other
+                                    <input type="radio" name="gender" value="<?php echo $gender; ?>"> Male<br>
+                                    <input type="radio" name="gender" value="<?php echo $gender; ?>"> Female<br>
+                                    <input type="radio" name="gender" value="<?php echo $gender; ?>"> Other
                                 </div><br>
 
                                 <!--Client category-->
                                 <div class="form-group">
                                     <label>Categories: </label><br>                                
-                                    <select value = "category" name="category">
+                                    <select value = "<?php echo $category; ?>" name="category">
                                         <?php                                    
                                             $sql = "SELECT * FROM category";
                                             $result = $conn->query($sql);
@@ -119,11 +136,11 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                                 <!--Client Image for Authentication of Information-->
                                 <div class="form-group">
                                     <label for="image">Client Image:</label>
-                                    <input class="form-control" type="file" name="image" id="image" >
+                                    <input class="form-control" value="<?php echo $image; ?>" type="file" name="image" id="image" >
                                 </div><br><br>
                                 
                                 <!--Submit Client Information-->
-                                <input class="btn btn-success btn-block" type="submit" name="submit" value="Add new client"  >
+                                <input class="btn btn-success btn-block" type="submit" name="submit"   >
                                 <br>
                                 
                             </fieldset>
@@ -167,6 +184,7 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
 
                             </script>
                         </form>
+                        <?php } ?>
                     </div>
                 </div><!--ending of col 10-->
             </div><!-- Ending of row-->            

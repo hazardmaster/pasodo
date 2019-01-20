@@ -1,9 +1,6 @@
 <?php $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
 <?php require_once("include/sessions.php");?>
-<?php if(isset($_POST["submitborrowed"])){
-        $category = $_POST["Category"];
-        echo $category;}
-    ?>
+
 <!DOCTYPE>
 
 <html>
@@ -39,7 +36,7 @@
                         <li style="float: right;"><a href="processNewLoan.php?id=<?php
                             $clientID = $_POST["clientID"];
                              echo $clientID; ?>" 
-                             class="btn btn-info btn-large" name="submit" style="background-color: green" value="New Loan">New Loan!</a></li>
+                             class="btn btn-info btn-large" style="background-color: green" >New Loan!</a></li>
                 </div>
             </div>
         

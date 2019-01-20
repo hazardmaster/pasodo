@@ -52,8 +52,8 @@
                     <div> <?php echo message(); 
                                 echo SuccessMessage();
                         ?> </div>
-                    <?php
-                        //Show categories on drop down
+                    <?php                    
+                    //Show categories on drop down
                     if($conn->connect_error){
                         die("Connection failed:" .$conn->connect_error);
                     }
@@ -63,19 +63,17 @@
                             //output of each row                             
                                 ?>
 
-                                <form method="post" action="" id="form">
-                                    <select onchange="document.getElementById("form").Submit">
-                                        <?php
+                                <form action="">                                    
+                                    <select name='catName' onchange='this.form.submit()'>
+                                      <?php
                                         while ($row = $result->fetch_assoc()){
                                             $catID = $row['ID'];
-                                            $catname = $row['name']; ?>
-                                        <option name="catname" value="<?php echo $catID; ?>"><?php 
-                                                    echo $catname;
-                                                ?>                                                    
-                                        </option>
+                                            $catName = $row['name']; ?>
+                                        <option> <?php echo $catName; ?> </option>
                                        <?php } ?>
-                                    </select>  
-                                    <input style="display: none;" type="submit" >                                  
+                                    </select>
+
+                                    <noscript><input type="submit" value="Submit"></noscript>
                                 </form>
 
                            <?php } ?> 
@@ -94,11 +92,18 @@
                                 <th>Action</th>
                             </thead>
                              <?php     
-                                    $sql = "SELECT * FROM client2 WHERE category_id = '1'";
+                                    $catName = $_GET["catName"];
+                                    $sqlcat = "SELECT ID FROM category WHERE name = '$catName' ";
+                                    $result = $conn->query($sqlcat);
+                                    $datarow = $result->fetch_assoc();
+                                    $catID = $datarow["ID"];
+
+                                    $sql = "SELECT * FROM client2 WHERE category_id = '$catID'";
                                     $result = $conn->query($sql);
 
                                     if($result->num_rows > 0){
                                         while($datarows = $result->fetch_assoc()){
+                                            $ID = $datarows["ID"];
                                             $clientID = $datarows["clientID"];
                                             $F_name = $datarows["firstName"];
                                             $L_name = $datarows["lastName"];
@@ -110,16 +115,19 @@
                                             <td><?php echo $F_name."  ". $L_name ?></td>
                                             <td><?php echo $phone ?></td>
                                             <td><?php echo $date ?></td>
-                                            <td><a href="delete.php?<?php echo $ID?>"><span class="btn btn-danger">Delete</span></a></td>
+                                            <td>
+                                                <a href="editClient.php?id=<?php echo $ID?>"><span class="btn btn-info">Edit</span></a>
+                                                <a href="delete.php?id=<?php echo $ID?>"><span class="btn btn-danger">Delete</span></a>
+                                            </td>
                                          </tr>
                                          <?php  
                                         }
                                     }else{
                                         $_SESSION["message"] = "No results found";
-                                        header("Location:backend.php");
                                         exit;
                                     }
-                                 ?>                       
+                                    
+                            ?>                       
                         </table>
                     </div>
                 </div>

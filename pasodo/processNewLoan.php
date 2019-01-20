@@ -1,33 +1,6 @@
 <?php $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
 <?php require_once("include/sessions.php");?>
-<?php if(isset($_POST["submit"])){
-        $clientID = $_POST["clientID"];
-        $loanAmount = $_POST["loanAmount"];
-        $image = $_POST["image"];
-        $deadlineDate = $_POST["deadlineDate"];
-        $notes = $_POST["notes"];
-        date_default_timezone_set("Africa/nairobi");
-            $date = time();
-            $datetime=strftime("%d-%m-%Y %H:%M:%S", $date);
-        }
 
-        //insert client Loan details to the Database using prepared statement
-        if($conn->connect_error){
-            die("Connection failed: " . $conn->connect_error);
-        }
-        //prepare and bind
-        $stmt = $conn->prepare("INSERT INTO loan (clientID,amount,created_at,updated_at,deadline_at,image,notes) VALUES (?,?,?,?,?,?,?)");
-        $stmt->bind_param("sssssss", $clientID, $loanAmount, $datetime, $datetime, $deadlineDate, $image, $notes);
-        $result = $stmt->execute();
-        if($result){
-            $_SESSION["SuccessMessage"] = "Amount entered successfully to the database";
-            header("Location: processNewLoan.php?id=$clientID");
-            exit;
-        }
-        $stmt->close();
-        $conn->close();
-
-    ?>
 <!DOCTYPE>
 
 <html>
@@ -82,7 +55,7 @@
                     ?>
                      
                      <!--Form for entering client information-->
-                        <form action="" method="post" onsubmit="formValidation()"  name="loanForm" id="loanForm">                        
+                        <form action="newLoanToDb.php" method="post" onsubmit="formValidation()"  name="loanForm" id="loanForm">                        
                             <fieldset  style="color: #000000">
 
                                 <!--Loan Amount-->
@@ -109,9 +82,9 @@
                                 <!--Loan Officer Side Notes-->
                                 <div class="form-group">
                                     <label for="image">Loan Officer notes:</label>
-                                    <textarea name="notes" class="form-control" rows="14px" cols="20px">Add notes here</textarea>
+                                    <textarea name="notes" id="notes" class="form-control" rows="14px" cols="20px">Add notes here</textarea>
                                 </div><br><br>
-                                <input type="hidden" name="clientID" value="<?php $clientID = $_GET["id"]; echo $clientID; ?> ">
+                                <input type="hidden" name="clientID" id="clientID" value="<?php $clientID = $_GET["id"]; echo $clientID; ?> ">
 
                                 <!--Submit Client Information-->
                                 <input class="btn btn-success btn-block" type="submit" name="submit" value="Submit Information"  >
@@ -120,8 +93,20 @@
                             </fieldset>
                             
                             <script>
-                                function formValidation(){                                    
-                                    return confirm("Click ok to proceed");
+                                function formValidation(){
+                                    var loanAmount = document.getElementById('loanAmount').value;
+                                    var image = document.getElementById('image').value;
+                                    var deadlineDate = document.getElementById('deadlineDate').value;
+                                    var notes = document.getElementById('notes').value;
+                                    var clientID = document.getElementById('clientID').value;
+
+                                    if(loanAmount.length > 0 ){
+                                        return confirm("Click ok to proceed");
+                                    } else{
+                                        alert("Fill out all spaces. Please");
+                                        return false;
+                                    }                               
+                                    
                                 }
 
                             </script>
