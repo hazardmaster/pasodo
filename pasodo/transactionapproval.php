@@ -66,45 +66,50 @@
                                 <th>NAME</th>
                                 <th>Amount</th>
                                 <th>Loan Officer Notes</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </thead>
                              <?php     
-                                    $sql = "SELECT * FROM loan WHERE status = 'pending'";
+                                    $sql = "SELECT * FROM loan";
                                     $result = $conn->query($sql);
+                                    print_r($result);
                                     if($result->num_rows > 0){
                                         while($datarows = $result->fetch_assoc()){
+                                            $loanID = $datarows["ID"];
                                             $clientID = $datarows["clientID"];
                                             $amount = $datarows["amount"];
                                             $notes = $datarows["notes"];
+                                            $status = $datarows["status"];
 
                                             
+                                                //Looking for client's name
+                                                $sql = "SELECT firstName, lastName FROM client2 WHERE clientID='$clientID' ";
+                                                $result = $conn->query($sql);
+                                                $datarows = $result->fetch_assoc();
+                                                $firstName = $datarows['firstName'];
+                                                $lastName = $datarows['lastName'];
 
                                          ?>
                                         <tr style="color: #000000">
                                             <td><?php echo $clientID ?></td>
                                             <td>
-                                                <?php
-                                                //Looking for client's name
-                                                $sql = "SELECT * FROM client2 WHERE clientID = '$clientID' ";
-                                                $result = $conn->query($sql);
-                                                while ($datarows = $result->fetch_assoc()) {
-                                                    $firstName = $datarows['firstName'];
-                                                    $middleName = $datarows['middleName'];
-                                                    $lastName = $datarows['lastName'];
+                                                <?php                                              
                                                     echo $firstName."  ". $lastName ;
-                                                }        ?>                                      
+                                                     ?>                                      
                                             </td>
                                             <td><?php echo $amount ?></td>
                                             <td><?php echo $notes ?></td>
+                                            <td><?php echo $status; ?></td>
                                             <td>
-                                                <a type="button" href="">Approve</a>
+                                                <a type="button" href="approve.php?id=<?php echo $loanID ?>">Approve</a>
                                                 
-                                                <a type="button" href="delete.php">Disapprove</a>
+                                                <a type="button" href="disapprove.php?id=<?php echo $loanID ?>">Disapprove</a>
                                             </td>
                                         </tr>
-                                         <?php  
+                                         <?php 
+                                          }  
                                         }
-                                    }else{
+                                      else{
                                         $_SESSION["message"] = "No results found";
                                         header("Location:backend.php");
                                         exit;

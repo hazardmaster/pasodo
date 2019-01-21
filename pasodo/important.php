@@ -1,7 +1,7 @@
 <?php $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
 <?php require_once("include/sessions.php");?>
 <?php if(isset($_POST["submitNewLoan"])){
-        $clientID = $_POST["clientID"];
+        $clientID = $GET["clientID"];
         $loanAmount = $_POST["loanAmount"];
         $image = $_POST["image"];
         $deadlineDate = $_POST["deadlineDate"];

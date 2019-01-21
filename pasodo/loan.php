@@ -73,7 +73,29 @@
                             $gender = $datarows["gender"]; 
                             $date = $datarows["created_at"]; ?>
 
-                            <center><img src="img/mathe.jpg" height="200px" width="200px"></center>
+                            <div class="row">
+
+                                <div col-sm-4>
+                                        <a href="payloan.php?id=<?php echo $clientID;?>" style="color: green; text-decoration: none;text-align: center; padding-left: 120px; padding-top: 120px"><b>PAY LOAN</b></a>
+                                </div>
+
+                                <div col-sm-4>
+                                    <center><img src="img/mathe.jpg" height="200px" width="200px"></center>
+                                </div>
+
+                                <div col-sm-4>
+                                    
+                                </div>
+
+                                
+
+                                
+
+
+                            </div>
+                            
+
+                            
 
                             <div style="border: 2px black solid">
                                 <h3>Personal Details</h3>
@@ -98,6 +120,7 @@
                                     $created_at = $datarows["created_at"];
                                     $deadline_at = $datarows["deadline_at"];
                                     $notes = $datarows["notes"];
+                                    $status = $datarows["status"];
                                 ?>
                                 <div class="form-group">
                                     <hr>
@@ -105,6 +128,10 @@
                                     <div class="form-group" style="color: #000000">
                                         <label for="loan amount">Outstanding Loan:</label>
                                         <b><span style="color: red"><?php echo $amount; ?></span></b>
+                                    </div>
+                                    <div class="form-group" style="color: #000000">
+                                        <label for="loan status">Loan status:</label>
+                                        <b><span style="font-style: italic;"><?php echo $status; ?></span></b>
                                     </div>
                                     <div class="form-group" style="color: #000000">
                                         <label for="Date Borrowed: ">Date Borrowd:</label>

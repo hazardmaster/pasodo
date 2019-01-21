@@ -1,19 +1,19 @@
 <?php
     $conn = mysqli_connect("localhost", "root", "", "pasodo");
-    require_once("include/sessions.php"); 
-    if(isset($_POST["submit"])){
-        $clientId = $_POST["clientId"];
-        $firstName = $_POST["firstName"];
-        $middleName = $_POST["middleName"];
-        $lastName = $_POST["lastName"];     
-        $gender = $_POST["gender"];                       
-        $phoneNumber = $_POST["phoneNumber"];
-        $category = $_POST["category"];
+    require_once("include/sessions.php");
+
+        $clientId = $_GET["clientId"];
+        $firstName = $_GET["firstName"];
+        $middleName = $_GET["middleName"];
+        $lastName = $_GET["lastName"];     
+        $gender = $_GET["gender"];                       
+        $phoneNumber = $_GET["phoneNumber"];
+        $category = $_GET["category"];
             $sqlcat = "SELECT ID FROM category WHERE name = '$category' ";
             $result = $conn->query($sqlcat);
             $datarow = $result->fetch_assoc();
         $catID = $datarow["ID"];
-        $image = $_POST["image"];
+        $image = $_GET["image"];
         
         if(empty('$clientId') || empty("$firstName") || empty("$middleName") || empty("$lastName") || empty("$gender") || empty("$category") || empty("$phoneNumber") || empty("$image")){            
             $_SESSION["ErrorMessage"] = "All fields must be filled out";
@@ -47,8 +47,7 @@
             $stmt->close();
             $conn->close();
                         
-       }    
-    }
+       }  
 
     
         
