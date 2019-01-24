@@ -51,7 +51,8 @@
                     <h1 style="color: #000000">View Categories</h1>
                     <div> <?php echo message(); 
                                 echo SuccessMessage();
-                        ?> </div>
+                        ?> 
+                    </div>
                     <?php                    
                     //Show categories on drop down
                     if($conn->connect_error){

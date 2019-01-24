@@ -1,26 +1,26 @@
-<?php $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
-<?php require_once("include/sessions.php");?>
-<?php if(isset($_POST["submitNewLoan"])){
-        $clientID = $GET["clientID"];
-        $loanAmount = $_POST["loanAmount"];
-        $image = $_POST["image"];
-        $deadlineDate = $_POST["deadlineDate"];
-        $notes = $_POST["notes"];
-        date_default_timezone_set("Africa/nairobi");
-            $date = time();
-            $datetime=strftime("%d-%m-%Y %H:%M:%S", $date);
-        }
+<!DOCTYPE html>
+<html>
+<body>
 
-        //insert client Loan details to the Database using prepared statement
-        if($conn->connect_error){
-            die("Connection failed: " . $conn->connect_error);
-        }else{
-	        if (empty($loanAmount) && empty($image)) {
-	        	echo "amount and image empty";
-	        }else{
-	        	echo $loanAmount;
-	        }
-        }
-        
+<p>Enter a number and click OK:</p>
 
-    ?>
+<input id="id1" type="number" min="100" max="300" required>
+<button onclick="myFunction()">OK</button>
+
+<p>If the number is less than 100 or greater than 300, an error message will be displayed.</p>
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+  var inpObj = document.getElementById("id1");
+  if (!inpObj.checkValidity()) {
+    document.getElementById("demo").innerHTML = inpObj.validationMessage;
+  } else {
+    document.getElementById("demo").innerHTML = "Input OK";
+  } 
+} 
+</script>
+
+</body>
+</html>

@@ -73,92 +73,170 @@
                             $gender = $datarows["gender"]; 
                             $date = $datarows["created_at"]; ?>
 
-                            <div class="row">
 
-                                <div col-sm-4>
-                                        <a href="payloan.php?id=<?php echo $clientID;?>" style="color: green; text-decoration: none;text-align: center; padding-left: 120px; padding-top: 120px"><b>PAY LOAN</b></a>
-                                </div>
-
-                                <div col-sm-4>
-                                    <center><img src="img/mathe.jpg" height="200px" width="200px"></center>
-                                </div>
-
-                                <div col-sm-4>
+                            <!-- The content section oc col-sm-10-->
+                                <!--Section for image of the different clients-->
+                            <section id="clientImage">
+                                <div class="row">
+                                    <center>
+                                        <img src="img/mathe.jpg" height="200px" width="200px">
+                                    </center>
                                     
                                 </div>
+                            </section>                        
 
-                                
 
-                                
+                            <!--This section shows the payment information of the client i.e 1. Total alltime loan. 2. Amount Total amount paid. 3. Remaining amount-->
+                            <section style="margin: 30px auto">
+                                    <div class="row" style="background-color: black; ">
 
+                                        <div class="col-lg-7 col-md-7 col-sm-12">
+
+                                            <!--Action is either to borrow new loan or pay loan -->
+
+                                            <!--Button for new loan and pay loan-->
+                                            <div class="row" style="padding: 30px">
+                                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                                    <div class="newloan">
+                                                        <a href="processNewLoan.php?id=<?php
+                                                             echo $clientID; ?>" 
+                                                             class="btn btn-success btn-large" style="text-decoration: none;" ><span><img src="img/new-loan-icon.png" width="40px" height="40px"></span> NEW LOAN
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                                    <div class="payloan">
+                                                        <a href="processPayLoan.php?id=<?php
+                                                             echo $clientID; ?>" 
+                                                             class="btn btn-danger btn-large" style="text-decoration: none;" ><span><img src="img/pay-loan-icon.png" width="40px" height="40px"></span>PAY LOAN
+                                                        </a>
+                                                    </div>
+                                                </div>                                     
+                                            </div>                                           
+                                        </div>
+
+                                        <div class="col-lg-5 col-md-5 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    <h2 class="" style="font-size: 42px; color: green ">
+                                                        <span>
+                                                            <?php 
+                                                                $sql = "SELECT SUM(amount) AS totalAmount FROM loan WHERE clientID = '$clientID' ";
+                                                                $result = $conn->query($sql);
+                                                                if($result){
+                                                                    $datarows = $result->fetch_assoc();
+                                                                    $totalLoanAmount = $datarows['totalAmount'];
+                                                                    echo $totalLoanAmount;                                                                   
+                                                                }else{
+                                                                    echo "no values selected";
+                                                                }
+                                                              ?>
+                                                        </span>
+                                                    </h2>
+                                                    <div class="total-loan-text" style="color:white">
+                                                        Total Loan Borrowed
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="border-left: 1px dashed #fff; border-right: 1px dashed #fff;">
+                                                    <h2 class="" style="font-size: 52px; color: orange">
+                                                        <span><?php 
+                                                                $sql = "SELECT SUM(amount) AS totalAmount FROM payments WHERE clientID = '$clientID' ";
+                                                                $result = $conn->query($sql);
+                                                                $num_rows = mysqli_num_rows($result);
+                                                                if($num_rows > 0){
+
+                                                                $datarows = $result->fetch_assoc();
+                                                                    $totalPaymentAmount = $datarows['totalAmount'];
+                                                                    echo $totalPaymentAmount;     
+                                                                }else{
+                                                                    echo "0.00";
+                                                                }
+                                                              ?></span>
+                                                    </h2>
+                                                    <div class="total-paid-text" style="color:white">
+                                                        Total Loan Paid
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    <h2 class="avail-balance-sum balance-sum" style="font-size: 52px; color: yellow">
+                                                        <span>0.00</span>
+                                                    </h2>
+                                                    <div class="outstanding-balance-text" style="color:white">
+                                                        Outstanding Balance
+                                                    </div>
+                                                </div>                                           
+                                            </div>
+                                        </div>     
+
+                                    </div>  
+                            </section>
+                            <section style="margin: 30px">
+                                <div style="border: 2px black solid">
+                                    <h3>Personal Details</h3>
+                                    <div class="form-group" style="color: #000000">
+                                        <label for="Name">Full Name:</label>
+                                        <?php echo $firstName. "  ". $middleName. "  ". $lastName; ?>
+                                </div>
+                                <div class="form-group" style="color: #000000">
+                                        <label for="ID number">ID Number:</label>
+                                        <?php echo $clientID; ?>
+                                </div>
+                                <div class="form-group" style="color: #000000">
+                                        <label for="Phone number">Phone Number:</label>
+                                        <?php echo '0'.$phone; ?>
+                                </div>
+                                    <?php $sql = "SELECT * FROM loan WHERE clientID = '$clientID' ";
+                                    $result = $conn->query($sql);
+                                    while ($datarows = $result->fetch_assoc()) {
+                                        
+                                        $clientID = $datarows["clientID"];
+                                        $amount = $datarows["amount"];
+                                        $created_at = $datarows["created_at"];
+                                        $deadline_at = $datarows["deadline_at"];
+                                        $notes = $datarows["notes"];
+                                        $status = $datarows["status"];
+                                    ?>
+                                    <div class="form-group">
+                                        <hr>
+                                        <h3>Loan Details</h3>
+                                        <div class="form-group" style="color: #000000">
+                                            <label for="loan amount">Outstanding Loan:</label>
+                                            <b><span style="color: red"><?php echo $amount; ?></span></b>
+                                        </div>
+                                        <div class="form-group" style="color: #000000">
+                                            <label for="loan status">Loan status:</label>
+                                            <b><span style="font-style: italic;"><?php echo $status; ?></span></b>
+                                        </div>
+                                        <div class="form-group" style="color: #000000">
+                                            <label for="Date Borrowed: ">Date Borrowd:</label>
+                                            <?php echo $created_at; ?>
+                                        </div>
+                                        <div class="form-group" style="color: #000000">
+                                            <label for="Deadline Date:">Deadline Date:</label>
+                                            <?php echo $deadline_at; ?>
+                                        </div>
+                                        <div class="form-group" style="color: #000000">
+                                            <label for="Loan Officer Notes:">Loan Officer Notes:</label>
+                                            <p><?php echo $notes; ?></p>
+                                        </div>
+                                                                 
+                                    </div>
+
+                                   <?php } ?>
 
                             </div>
+                            </section>
                             
-
-                            
-
-                            <div style="border: 2px black solid">
-                                <h3>Personal Details</h3>
-                                <div class="form-group" style="color: #000000">
-                                    <label for="Name">Full Name:</label>
-                                    <?php echo $firstName. "  ". $middleName. "  ". $lastName; ?>
-                                </div>
-                                <div class="form-group" style="color: #000000">
-                                    <label for="ID number">ID Number:</label>
-                                    <?php echo $clientID; ?>
-                                </div>
-                                <div class="form-group" style="color: #000000">
-                                    <label for="Phone number">Phone Number:</label>
-                                    <?php echo '0'.$phone; ?>
-                                </div>
-                                <?php $sql = "SELECT * FROM loan WHERE clientID = '$clientID' ";
-                                $result = $conn->query($sql);
-                                while ($datarows = $result->fetch_assoc()) {
-                                    
-                                    $clientID = $datarows["clientID"];
-                                    $amount = $datarows["amount"];
-                                    $created_at = $datarows["created_at"];
-                                    $deadline_at = $datarows["deadline_at"];
-                                    $notes = $datarows["notes"];
-                                    $status = $datarows["status"];
-                                ?>
-                                <div class="form-group">
-                                    <hr>
-                                    <h3>Loan Details</h3>
-                                    <div class="form-group" style="color: #000000">
-                                        <label for="loan amount">Outstanding Loan:</label>
-                                        <b><span style="color: red"><?php echo $amount; ?></span></b>
-                                    </div>
-                                    <div class="form-group" style="color: #000000">
-                                        <label for="loan status">Loan status:</label>
-                                        <b><span style="font-style: italic;"><?php echo $status; ?></span></b>
-                                    </div>
-                                    <div class="form-group" style="color: #000000">
-                                        <label for="Date Borrowed: ">Date Borrowd:</label>
-                                        <?php echo $created_at; ?>
-                                    </div>
-                                    <div class="form-group" style="color: #000000">
-                                        <label for="Deadline Date:">Deadline Date:</label>
-                                        <?php echo $deadline_at; ?>
-                                    </div>
-                                    <div class="form-group" style="color: #000000">
-                                        <label for="Loan Officer Notes:">Loan Officer Notes:</label>
-                                        <p><?php echo $notes; ?></p>
-                                    </div>
-                                                             
-                                </div>
-
-                               <?php } ?>
-
-                            </div>
                                                    
                        <?php }
 
 
                     }else{
 
-                        echo "hdiuahdoia";
-                        $_SESSION["message"] = "You are not here";
+                        echo "Hello guys";
+                        $_SESSION["errorMessage"] = "Please Enter clientID afresh";
                     }
                     ?>
 
@@ -174,3 +252,4 @@
     </body>
 
 </html>
+
