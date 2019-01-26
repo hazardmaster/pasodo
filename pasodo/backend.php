@@ -54,7 +54,7 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                         ?> </div>
                     <div>
                         <!--Form for entering client information-->
-                        <form action="processclient.php" method="post" onsubmit="formValidation()"  name="clientForm" id="clientForm">                        
+                        <form action="processclient.php" method="POST" onsubmit="formValidation()"  name="clientForm" id="clientForm">                        
                             <fieldset>
 
                                 <!--Client ID-->

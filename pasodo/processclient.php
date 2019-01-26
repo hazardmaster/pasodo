@@ -14,13 +14,35 @@
             $datarow = $result->fetch_assoc();
         $catID = $datarow["ID"];
         $image = $_POST["image"];
+        $imagename = $_FILES['image']['name'];
+        $tmpname = $_FILES['image']['tmp_name'];
         
-        if(empty('$clientId') || empty("$firstName") || empty("$middleName") || empty("$lastName") || empty("$gender") || empty("$category") || empty("$phoneNumber") || empty("$image")){            
-            $_SESSION["ErrorMessage"] = "All fields must be filled out";
-            header ("Location:backend.php");
-           exit;
-       }else{
-            //Check authenticity of user ID
+        if(empty('$clientId')){
+            $_SESSION["ErrorMessage"] = "clientID missing";
+        }
+        if (empty("$firstName")) {
+            $_SESSION["ErrorMessage"] = "firstName missing";
+        }
+        if (empty("$middleName")) {
+            $_SESSION["ErrorMessage"] = "middleName missing";
+        }
+        if (empty("$lastName")) {
+            $_SESSION["ErrorMessage"] = "lastName missing";
+        }
+        if (empty("$gender")) {
+            $_SESSION["ErrorMessage"] = "gender missing";
+        }
+        if (empty("$category")) {
+            $_SESSION["ErrorMessage"] = "category missing";
+        }
+        if (empty("$phoneNumber")) {
+            $_SESSION["ErrorMessage"] = "phone missing";
+        }
+        else{
+             //Check authenticity of user ID
+            $uploaddir = 'img/';
+            $uploadfile = $uploaddir . basename($imagename);
+            move_uploaded_file($tmpname , $uploadfile);
 
             date_default_timezone_set("Africa/nairobi");
             $date = time();
@@ -47,8 +69,9 @@
             $stmt->close();
             $conn->close();
                         
-       }    
-    }
+        }            
+}    
+    
 
     
         

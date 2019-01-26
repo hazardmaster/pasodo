@@ -93,7 +93,7 @@
                         <!--Amount to be paid-->
                         <div class="form-group">
                             <label for="loanAmount">Enter Amount:</label>
-                            <input class="form-control" type="number" name="loanAmount" id="loanAmount" placeholder="ID number" >
+                            <input class="form-control" type="number" name="loanAmount" id="loanAmount" placeholder="Enter payments amount" >
                         </div><br><br> 
 
                         <!--Submit Payment Information-->

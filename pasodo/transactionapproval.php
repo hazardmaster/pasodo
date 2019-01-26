@@ -72,7 +72,6 @@
                              <?php     
                                     $sql = "SELECT * FROM loan";
                                     $result = $conn->query($sql);
-                                    print_r($result);
                                     if($result->num_rows > 0){
                                         while($datarows = $result->fetch_assoc()){
                                             $loanID = $datarows["ID"];
@@ -83,18 +82,18 @@
 
                                             
                                                 //Looking for client's name
-                                                $sql = "SELECT firstName, lastName FROM client2 WHERE clientID='$clientID' ";
-                                                $result = $conn->query($sql);
-                                                $datarows = $result->fetch_assoc();
-                                                $firstName = $datarows['firstName'];
-                                                $lastName = $datarows['lastName'];
+                                              //  $sql = "SELECT firstName, lastName FROM client2 WHERE clientID='$clientID' ";
+                                                //$result = $conn->query($sql);
+                                                //$datarows = $result->fetch_assoc();
+                                                //$firstName = $datarows['firstName'];
+                                                //$lastName = $datarows['lastName'];
 
                                          ?>
                                         <tr style="color: #000000">
                                             <td><?php echo $clientID ?></td>
                                             <td>
                                                 <?php                                              
-                                                    echo $firstName."  ". $lastName ;
+                                                    echo "" ;
                                                      ?>                                      
                                             </td>
                                             <td><?php echo $amount ?></td>

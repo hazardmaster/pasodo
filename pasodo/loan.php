@@ -86,8 +86,8 @@
 
 
                             <!--This section shows the payment information of the client i.e 1. Total alltime loan. 2. Amount Total amount paid. 3. Remaining amount-->
-                            <section style="margin: 30px auto">
-                                    <div class="row" style="background-color: black; ">
+                            <section style="margin-left: 45px ;margin-right: 50px; margin-top: 10px ">
+                                    <div class="row" style="position: relative; background-color: black; ">
 
                                         <div class="col-lg-7 col-md-7 col-sm-12">
 
@@ -209,16 +209,9 @@
                         <?php  
 
                         //Seect client Info from the loans table
-                        $sql = "SELECT loan.*, payments.* FROM loan l INNER JOIN payments p ON (loan.clientID = payments.clientID) WHERE loan.clientID = '$clientID' ";
-                        $result2 = mysqli_query($conn, $sql);
+                        $sql = "SELECT * FROM loan WHERE clientID = '$clientID' ";
                         $result = $conn->query($sql);
 
-                        if($result2){
-                            echo "Woow";
-                        }else{
-                            echo "OOps";
-                        }
-                        print_r($result);
                         while ($datarows = $result->fetch_assoc()) {
                             $date = $datarows["created_at"];                                   
                             $debit = $datarows["amount"];
