@@ -1,26 +1,35 @@
+
+
 <!DOCTYPE html>
 <html>
+<head>
+    <title></title>
+</head>
 <body>
-
-<p>Enter a number and click OK:</p>
-
-<input id="id1" type="number" min="100" max="300" required>
-<button onclick="myFunction()">OK</button>
-
-<p>If the number is less than 100 or greater than 300, an error message will be displayed.</p>
-
-<p id="demo"></p>
-
-<script>
-function myFunction() {
-  var inpObj = document.getElementById("id1");
-  if (!inpObj.checkValidity()) {
-    document.getElementById("demo").innerHTML = inpObj.validationMessage;
-  } else {
-    document.getElementById("demo").innerHTML = "Input OK";
-  } 
-} 
-</script>
-
+    <form enctype="multipart/form-data" action="" method="POST">
+    <input type="hidden" name="MAX_FILE_SIZE" value="512000" />
+    Send this file: <input name="image" type="file" />
+    <input type="submit" value="Send File" />
+</form>
 </body>
 </html>
+<?php
+
+    $uploaddir = 'img/';
+    $uploadfile = $uploaddir . basename($_FILES['image']['name']);
+
+    echo "<p>";
+
+    if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadfile)) {
+      echo "File is valid, and was successfully uploaded.\n";
+    } else {
+       echo "Upload failed";
+    }
+
+    echo "</p>";
+    echo '<pre>';
+    echo 'Here is some more debugging info:';
+    print_r($_FILES);
+    print "</pre>";
+
+    ?>

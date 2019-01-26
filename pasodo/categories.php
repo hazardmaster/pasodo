@@ -10,6 +10,16 @@
         <link rel="stylesheet" href="css/backend.css">
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function(){
+              $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+              });
+            });
+        </script>
         
     </head>
     <body>
@@ -81,7 +91,9 @@
                         
                     
                     
-                   <!--  -->
+                   <!-- Filter search BAR -->
+                   <input id="myInput" type="text" placeholder="Search.."><br><br>
+
                     
                     <div class="table-responsive">
                          <table class="table table-borderless table-dark">
@@ -111,6 +123,7 @@
                                             $date = $datarows["created_at"];
                                             $phone = $datarows["phone"];
                                          ?>
+                                <tbody id="myTable">
                                         <tr style="color: #000000">
                                             <td><?php echo $clientID ?></td>
                                             <td><?php echo $F_name."  ". $L_name ?></td>
@@ -121,6 +134,7 @@
                                                 <a href="delete.php?id=<?php echo $ID?>"><span class="btn btn-danger">Delete</span></a>
                                             </td>
                                          </tr>
+                                </tbody>
                                          <?php  
                                         }
                                     }else{

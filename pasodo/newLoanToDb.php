@@ -25,17 +25,17 @@
                 $execute = $stmt->execute();
                  if($execute){        
                     $_SESSION["SuccessMessage"] = "Entry successful";       
-                    header("Location:processNewLoan.php");                    
+                    header("Location:loan.php");                    
                     exit;
                     }else{
                         $_SESSION["message"] = "Entry error";                        
-                        header("Location:processNewLoan.php");
+                        header("Location:loan.php");
                         exit;
                     } 
                 $stmt->close();
                 $conn->close(); 
                 }else{
-                header('Location: processNewLoan.php');
+                header('Location: loan.php');
                 $_SESSION["ErrorMessage"] = "Error! Blank fields";
                 exit;
 

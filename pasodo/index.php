@@ -1,9 +1,60 @@
 <?php $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
 <?php require_once("include/sessions.php");?>
-<?php if(isset($_POST["submitborrowed"])){
-        $category = $_POST["Category"];
-        echo $category;}
-    ?>
+<?php
+  // DB Credentials
+  define('DB_SERVER', 'localhost');
+  define('DB_USERNAME', 'root');
+  define('DB_PASSWORD', '');
+  define('DB_NAME', 'pasodo');
+
+  // Attempt to connect to MySQL with PDO
+  try {
+    $pdo = new PDO("mysql:host=" . DB_SERVER . ";dbname=" . DB_NAME, DB_USERNAME, DB_PASSWORD);
+  } catch(PDOException $e) {
+    die("ERROR: Could not connect. " . $e->getMessage());
+  }
+  ?>
+
+<?php 
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        $clientID = $_POST["clientID"];
+        if (empty($clientID)) {
+            $_SESSION["ErrorMessage"] = "Empty input";
+            header('Location: index.php');
+            exit;
+        }else{
+            //Check existence of ID in the database PDO used
+            $clientID = $_POST['clientID'];
+            $sql = "SELECT clientID FROM client2 WHERE clientID = '$clientID' ";
+
+            //Prepare statement
+            if($stmt = $pdo->prepare($sql)){
+                //Attempt to execute statement
+                if($stmt->execute())
+                    //check if ID exists
+                    if($stmt->rowCount() === 1){
+                        if($datarows = $stmt->fetch()){
+                            $clientID = $datarows["clientID"];
+                            //Start session for the specific ID
+                            session_start();
+                            $_SESSION["clientID"] = $clientID;
+                            header("Location: loan.php");
+                        }
+
+                    }else{
+                        $_SESSION['ErrorMessage'] = "CLient not found";
+                        header("Location: index.php");
+                        exit;
+                    }
+                       
+                }else{
+                    //close statement
+                    unset($stmt);
+                }
+            }
+        }         
+    
+?>
 <!DOCTYPE>
 
 <html>
@@ -57,7 +108,7 @@
                         echo SuccessMessage();
                     ?>
                     <!--Input CLient ID to view their Payment details-->
-                    <form style="form-control" action="loan.php" method="post">
+                    <form style="form-control" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" onsubmit="return validateForm()">
                         <div class="form-group">
                             <input type="Number" name="clientID" id="clientID" placeholder="Enter client ID" >                        
                             <input class="btn btn-info btn-large" name="submit" type="submit" value="view client info" >
@@ -65,6 +116,20 @@
                     </form>                 
                 </div>
             </div><!-- Ending of row-->
+            <script>
+                function validateForm(){
+                    var clientID = document.getElementById('clientID').value;
+                    if(clientID.length > 0){
+                        return confirm("proceed");
+                        return true;
+                    }else{
+                        alert("EMPTY Input");
+                        return false;
+                    }
+                }
+                
+
+            </script>
         </div><!-- ending of container-->
         <div id="footer" style="position: fixed; bottom: 0; width: 1360px;">
             <hr><p>Brain Behind | Oscar Hazard | &copy;2018  --- All rights reserved</p>

@@ -34,7 +34,7 @@
 
                     </ul>
                         <li style="float: right;"><a href="processNewLoan.php?id=<?php
-                            $clientID = $_POST["clientID"];
+                            $clientID = $_SESSION["clientID"];
                              echo $clientID; ?>" 
                              class="btn btn-info btn-large" style="background-color: green" >New Loan!</a></li>
                 </div>
@@ -58,10 +58,9 @@
                         echo message();
                         echo SuccessMessage();
                     
-                    if(isset($_POST["submit"])){
 
                         //Check client personal Info
-                        $clientID = $_POST["clientID"];
+                        $clientID = $_SESSION["clientID"];
                         $sql = "SELECT * FROM client2 WHERE clientID = '$clientID' ";
                         $result = $conn->query($sql);
                         while ($datarows = $result->fetch_assoc()) {
@@ -161,7 +160,12 @@
 
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                     <h2 class="avail-balance-sum balance-sum" style="font-size: 52px; color: yellow">
-                                                        <span>0.00</span>
+                                                        <span>
+                                                            <?php
+                                                            $outstandingBalance = $totalLoanAmount - $totalPaymentAmount;
+                                                                    echo $outstandingBalance;
+                                                                    ?>
+                                                        </span>
                                                     </h2>
                                                     <div class="outstanding-balance-text" style="color:white">
                                                         Outstanding Balance
@@ -172,75 +176,75 @@
 
                                     </div>  
                             </section>
-                            <section style="margin: 30px">
-                                <div style="border: 2px black solid">
-                                    <h3>Personal Details</h3>
-                                    <div class="form-group" style="color: #000000">
-                                        <label for="Name">Full Name:</label>
-                                        <?php echo $firstName. "  ". $middleName. "  ". $lastName; ?>
-                                </div>
-                                <div class="form-group" style="color: #000000">
-                                        <label for="ID number">ID Number:</label>
-                                        <?php echo $clientID; ?>
-                                </div>
-                                <div class="form-group" style="color: #000000">
-                                        <label for="Phone number">Phone Number:</label>
-                                        <?php echo '0'.$phone; ?>
-                                </div>
-                                    <?php $sql = "SELECT * FROM loan WHERE clientID = '$clientID' ";
-                                    $result = $conn->query($sql);
-                                    while ($datarows = $result->fetch_assoc()) {
-                                        
-                                        $clientID = $datarows["clientID"];
-                                        $amount = $datarows["amount"];
-                                        $created_at = $datarows["created_at"];
-                                        $deadline_at = $datarows["deadline_at"];
-                                        $notes = $datarows["notes"];
-                                        $status = $datarows["status"];
-                                    ?>
-                                    <div class="form-group">
-                                        <hr>
-                                        <h3>Loan Details</h3>
-                                        <div class="form-group" style="color: #000000">
-                                            <label for="loan amount">Outstanding Loan:</label>
-                                            <b><span style="color: red"><?php echo $amount; ?></span></b>
-                                        </div>
-                                        <div class="form-group" style="color: #000000">
-                                            <label for="loan status">Loan status:</label>
-                                            <b><span style="font-style: italic;"><?php echo $status; ?></span></b>
-                                        </div>
-                                        <div class="form-group" style="color: #000000">
-                                            <label for="Date Borrowed: ">Date Borrowd:</label>
-                                            <?php echo $created_at; ?>
-                                        </div>
-                                        <div class="form-group" style="color: #000000">
-                                            <label for="Deadline Date:">Deadline Date:</label>
-                                            <?php echo $deadline_at; ?>
-                                        </div>
-                                        <div class="form-group" style="color: #000000">
-                                            <label for="Loan Officer Notes:">Loan Officer Notes:</label>
-                                            <p><?php echo $notes; ?></p>
-                                        </div>
-                                                                 
-                                    </div>
-
-                                   <?php } ?>
-
-                            </div>
-                            </section>
-                            
-                                                   
-                       <?php }
 
 
-                    }else{
-
-                        echo "Hello guys";
-                        $_SESSION["errorMessage"] = "Please Enter clientID afresh";
-                    }
-                    ?>
-
+            <!--Section Displaying client Particular info with A table-->
+        <section style="margin: 30px">
+            <div style="border: 2px black solid">
+                <h3>Personal Details</h3>
+                <div class="form-group" style="color: #000000">
+                    <label for="Name">Full Name:</label>
+                    <?php echo $firstName. "  ". $middleName. "  ". $lastName; ?>
                 </div>
+                <div class="form-group" style="color: #000000">
+                    <label for="ID number">ID Number:</label>
+                        <?php echo $clientID; ?>
+                </div>
+                <div class="form-group" style="color: #000000">
+                    <label for="Phone number">Phone Number:</label>
+                    <?php echo '0'.$phone; ?>
+                </div>
+
+                <!--Displaying Payment Information in a Table-->
+
+                <div class="table-responsive">
+                    <table class="table table-borderless table-dark">
+                        <thead class="thead-light" style="color: #000000">
+                            <th>Date</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                            <th>Balance</th>
+                            <th>Status</th>
+                        </thead>
+                        <?php  
+
+                        //Seect client Info from the loans table
+                        $sql = "SELECT loan.*, payments.* FROM loan l INNER JOIN payments p ON (loan.clientID = payments.clientID) WHERE loan.clientID = '$clientID' ";
+                        $result2 = mysqli_query($conn, $sql);
+                        $result = $conn->query($sql);
+
+                        if($result2){
+                            echo "Woow";
+                        }else{
+                            echo "OOps";
+                        }
+                        print_r($result);
+                        while ($datarows = $result->fetch_assoc()) {
+                            $date = $datarows["created_at"];                                   
+                            $debit = $datarows["amount"];
+                            $status = $datarows["status"];
+                                            
+                        ?>
+                            <tr style="color: #000000">
+                                <td><?php echo $date ?></td>
+                                <td><?php echo $debit ?></td>
+                                <td><?php echo "Holla"; ?></td>
+                                <td><?php echo "Holla"; ?></td>
+                                <td><?php echo $status ?></td>                                            
+                            </tr>
+                            <?php  
+                                }                                   
+                             ?>                       
+                    </table>
+                </div>
+            </div>
+        </section>
+
+                <?php
+            }
+        ?>
+
+                </div><!--End of col-sm-10-->
             </div><!-- Ending of row-->
         </div><!-- ending of container-->
         <div id="footer" style="position: relative; bottom: 0; width: 1360px;">
