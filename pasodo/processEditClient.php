@@ -2,24 +2,61 @@
     $conn = mysqli_connect("localhost", "root", "", "pasodo");
     require_once("include/sessions.php");
 
-        $clientId = $_GET["clientId"];
-        $firstName = $_GET["firstName"];
-        $middleName = $_GET["middleName"];
-        $lastName = $_GET["lastName"];     
-        $gender = $_GET["gender"];                       
-        $phoneNumber = $_GET["phoneNumber"];
-        $category = $_GET["category"];
+        $clientId = $_POST["clientId"];
+        $firstName = $_POST["firstName"];
+        $middleName = $_POST["middleName"];
+        $lastName = $_POST["lastName"];     
+        $gender = $_POST["gender"];                       
+        $phoneNumber = $_POST["phoneNumber"];
+        $category = $_POST["category"];
             $sqlcat = "SELECT ID FROM category WHERE name = '$category' ";
             $result = $conn->query($sqlcat);
             $datarow = $result->fetch_assoc();
         $catID = $datarow["ID"];
-        $image = $_GET["image"];
+        $image = $_POST["image"];
+        $ID = $_POST["ID"];
         
-        if(empty('$clientId') || empty("$firstName") || empty("$middleName") || empty("$lastName") || empty("$gender") || empty("$category") || empty("$phoneNumber") || empty("$image")){            
-            $_SESSION["ErrorMessage"] = "All fields must be filled out";
+        if(empty('$clientId')){
+            $_SESSION["ErrorMessage"] = "client id missing";
             header ("Location:backend.php");
            exit;
-       }else{
+       } 
+       if(empty("$firstName")){
+            $_SESSION["ErrorMessage"] = "first name missing";
+            header ("Location:backend.php");
+           exit;
+       } 
+       if(empty("$middleName")){
+            $_SESSION["ErrorMessage"] = "middle name missing";
+            header ("Location:backend.php");
+           exit;
+       } 
+       if(empty("$lastName")){
+            $_SESSION["ErrorMessage"] = "last name missing";
+            header ("Location:backend.php");
+           exit;
+       } 
+       if(empty("$gender")){
+            $_SESSION["ErrorMessage"] = "gender missing";
+            header ("Location:backend.php");
+           exit;
+       } 
+       if(empty("$category")){
+            $_SESSION["ErrorMessage"] = "category missing";
+            header ("Location:backend.php");
+           exit;
+       }
+       if(empty("$phoneNumber")){
+            $_SESSION["ErrorMessage"] = "Phone number missing";
+            header ("Location:backend.php");
+           exit;
+       }
+       if(empty("$image")){            
+            $_SESSION["ErrorMessage"] = "Image file is missing";
+            header ("Location:backend.php");
+           exit;
+       }
+
             //Check authenticity of user ID
 
             date_default_timezone_set("Africa/nairobi");
@@ -32,7 +69,7 @@
             }
 
             //prepare and bind
-            $stmt = $conn->prepare("INSERT INTO client2 (clientID,firstName,middleName,lastName,phone,category_id,gender,image,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?)");
+            $stmt = $conn->prepare("UPDATE client2 SET clientID=?,firstName=?,middleName=?,lastName=?,phone=?,category_id=?,gender=?,image=?,created_at=?,updated_at=? WHERE ID = '$ID' ");
             $stmt->bind_param("ssssssssss", $clientId,$firstName,$middleName,$lastName,$phoneNumber,$catID,$gender,$image,$datetime,$datetime);
             $execute = $stmt->execute();
              if($execute){                
@@ -47,8 +84,7 @@
             $stmt->close();
             $conn->close();
                         
-       }  
-
+    
     
         
 ?>

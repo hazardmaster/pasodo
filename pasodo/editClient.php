@@ -138,6 +138,7 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                                     <label for="image">Client Image:</label>
                                     <input class="form-control" value="<?php echo $image; ?>" type="file" name="image" id="image" >
                                 </div><br><br>
+                                <input type="hidden" name="ID" value="<?php echo $ID; ?>">
                                 
                                 <!--Submit Client Information-->
                                 <input class="btn btn-success btn-block" type="submit" name="submit"   >

@@ -46,12 +46,11 @@
                    <!--<h3 style="color:white">Super Admin!!!</h3>-->
                     <ul id="side_menu" class="nav nav-pills nav-stacked">
                         <li class="active"><a href="index.php">client Info</a></li>
-                        <li><a href="transaction.php">Make Transaction</a></li>
-                        <li><a href="backend.php">Admin</a></li>
+                        <li><a href="">Make Transaction</a></li>
                         <!-- <li><a href="">Manage administrators</a></li>-->
                     </ul>
                 </div>
-                <div class="col-sm-10" >
+                <div class="col-sm-10" style="width: 80%" >
                     <h1 style="color: #000000">Client information</h1>
 
                     <?php
@@ -95,7 +94,7 @@
 
                                             <!--Button for new loan and pay loan-->
                                             <div class="row" style="padding: 30px">
-                                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                                     <div class="newloan">
                                                         <a href="processNewLoan.php?id=<?php
                                                              echo $clientID; ?>" 
@@ -103,7 +102,7 @@
                                                         </a>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                                     <div class="payloan">
                                                         <a href="processPayLoan.php?id=<?php
                                                              echo $clientID; ?>" 
@@ -116,9 +115,8 @@
 
                                         <div class="col-lg-5 col-md-5 col-sm-12">
                                             <div class="row">
-                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                    <h2 class="" style="font-size: 42px; color: green ">
-                                                        <span>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 5px">
+                                                    <h4 class="" style="font-size: 42px; color: green;">                                                  
                                                             <?php 
                                                                 $sql = "SELECT SUM(amount) AS totalAmount FROM loan WHERE clientID = '$clientID' ";
                                                                 $result = $conn->query($sql);
@@ -127,19 +125,17 @@
                                                                     $totalLoanAmount = $datarows['totalAmount'];
                                                                     echo $totalLoanAmount;                                                                   
                                                                 }else{
-                                                                    echo "no values selected";
+                                                                    echo "invalid";
                                                                 }
                                                               ?>
-                                                        </span>
-                                                    </h2>
-                                                    <div class="total-loan-text" style="color:white">
-                                                        Total Loan Borrowed
-                                                    </div>
+                                                       
+                                                    </h4>
+                                                        <h5 style="color: white">Total Loan Borrowed</h5>
                                                 </div>
 
-                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="border-left: 1px dashed #fff; border-right: 1px dashed #fff;">
-                                                    <h2 class="" style="font-size: 52px; color: orange">
-                                                        <span><?php 
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="border-left: 1px dashed #fff; border-right: 1px dashed #fff; padding: 5px">
+                                                    <h4 class="" style="font-size: 42px; color: orange">
+                                                        <?php 
                                                                 $sql = "SELECT SUM(amount) AS totalAmount FROM payments WHERE clientID = '$clientID' ";
                                                                 $result = $conn->query($sql);
                                                                 $num_rows = mysqli_num_rows($result);
@@ -151,25 +147,21 @@
                                                                 }else{
                                                                     echo "0.00";
                                                                 }
-                                                              ?></span>
-                                                    </h2>
-                                                    <div class="total-paid-text" style="color:white">
-                                                        Total Loan Paid
-                                                    </div>
+                                                              ?>
+                                                    </h4>
+                                                    <h5 style="color: white">Total Loan Paid</h5>
                                                 </div>
 
-                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                    <h2 class="avail-balance-sum balance-sum" style="font-size: 52px; color: yellow">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 5px">
+                                                    <h4 class="avail-balance-sum balance-sum" style="font-size: 42px; color: yellow; margin: 5px; padding: 5px">
                                                         <span>
                                                             <?php
                                                             $outstandingBalance = $totalLoanAmount - $totalPaymentAmount;
                                                                     echo $outstandingBalance;
                                                                     ?>
                                                         </span>
-                                                    </h2>
-                                                    <div class="outstanding-balance-text" style="color:white">
-                                                        Outstanding Balance
-                                                    </div>
+                                                    </h4>
+                                                    <h5 style="color: white">Outstanding Balance</h5>
                                                 </div>                                           
                                             </div>
                                         </div>     

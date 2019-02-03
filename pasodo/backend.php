@@ -54,7 +54,7 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                         ?> </div>
                     <div>
                         <!--Form for entering client information-->
-                        <form action="processclient.php" method="POST" onsubmit="formValidation()"  name="clientForm" id="clientForm">                        
+                        <form action="processclient.php" method="POST" onsubmit="formValidation()"  name="clientForm" id="clientForm" enctype="multipart/form-data">                        
                             <fieldset>
 
                                 <!--Client ID-->
@@ -119,7 +119,7 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                                 <!--Client Image for Authentication of Information-->
                                 <div class="form-group">
                                     <label for="image">Client Image:</label>
-                                    <input class="form-control" type="file" name="image" id="image" >
+                                    <input class="form-control" type="file" name="imageName" id="imageName" >
                                 </div><br><br>
                                 
                                 <!--Submit Client Information-->

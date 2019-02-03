@@ -20,6 +20,29 @@
               });
             });
         </script>
+        <script>
+            function showUser(catName) {
+                if (catName == "") {
+                    document.getElementById("txtHint").innerHTML = "";
+                    return;
+                } else { 
+                    if (window.XMLHttpRequest) {
+                        // code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp = new XMLHttpRequest();
+                    } else {
+                        // code for IE6, IE5
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            document.getElementById("displayCategoryTable").innerHTML = this.responseText;
+                        }
+                    };
+                    xmlhttp.open("GET","processCategories.php?catName="+catName,true);
+                    xmlhttp.send();
+                }
+            }
+        </script>
         
     </head>
     <body>
@@ -75,7 +98,8 @@
                                 ?>
 
                                 <form action="">                                    
-                                    <select name='catName' onchange='this.form.submit()'>
+                                    <select name='catName' onchange='showUser(this.value)'>
+                                        <option value="">Select category</option>
                                       <?php
                                         while ($row = $result->fetch_assoc()){
                                             $catID = $row['ID'];
@@ -93,58 +117,8 @@
                     
                    <!-- Filter search BAR -->
                    <input id="myInput" type="text" placeholder="Search.."><br><br>
-
+                   <div id="displayCategoryTable"></div>                  
                     
-                    <div class="table-responsive">
-                         <table class="table table-borderless table-dark">
-                            <thead class="thead-light" style="color: #000000">
-                                <th>ID NUMBER</th>
-                                <th>NAME</th>
-                                <th>PHONE NUMBER</th>
-                                <th>Date Added</th>
-                                <th>Action</th>
-                            </thead>
-                             <?php     
-                                    $catName = $_GET["catName"];
-                                    $sqlcat = "SELECT ID FROM category WHERE name = '$catName' ";
-                                    $result = $conn->query($sqlcat);
-                                    $datarow = $result->fetch_assoc();
-                                    $catID = $datarow["ID"];
-
-                                    $sql = "SELECT * FROM client2 WHERE category_id = '$catID'";
-                                    $result = $conn->query($sql);
-
-                                    if($result->num_rows > 0){
-                                        while($datarows = $result->fetch_assoc()){
-                                            $ID = $datarows["ID"];
-                                            $clientID = $datarows["clientID"];
-                                            $F_name = $datarows["firstName"];
-                                            $L_name = $datarows["lastName"];
-                                            $date = $datarows["created_at"];
-                                            $phone = $datarows["phone"];
-                                         ?>
-                                <tbody id="myTable">
-                                        <tr style="color: #000000">
-                                            <td><?php echo $clientID ?></td>
-                                            <td><?php echo $F_name."  ". $L_name ?></td>
-                                            <td><?php echo $phone ?></td>
-                                            <td><?php echo $date ?></td>
-                                            <td>
-                                                <a href="editClient.php?id=<?php echo $ID?>"><span class="btn btn-info">Edit</span></a>
-                                                <a href="delete.php?id=<?php echo $ID?>"><span class="btn btn-danger">Delete</span></a>
-                                            </td>
-                                         </tr>
-                                </tbody>
-                                         <?php  
-                                        }
-                                    }else{
-                                        $_SESSION["message"] = "No results found";
-                                        exit;
-                                    }
-                                    
-                            ?>                       
-                        </table>
-                    </div>
                 </div>
             </div><!-- Ending of row-->
         </div><!-- ending of container-->

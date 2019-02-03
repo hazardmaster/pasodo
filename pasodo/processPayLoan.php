@@ -74,8 +74,7 @@
                    <!--<h3 style="color:white">Super Admin!!!</h3>-->
                     <ul id="side_menu" class="nav nav-pills nav-stacked">
                         <li><a href="index.php">client Info</a></li>
-                        <li><a href="transaction.php">Make Transaction</a></li>
-                        <li><a href="backend.php">Admin</a></li>
+                        <li><a href="">Make Transaction</a></li>
                         <!-- <li><a href="">Manage administrators</a></li>-->
                     </ul>
                 </div>

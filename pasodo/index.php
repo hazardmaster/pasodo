@@ -96,12 +96,11 @@
                    <!--<h3 style="color:white">Super Admin!!!</h3>-->
                     <ul id="side_menu" class="nav nav-pills nav-stacked">
                         <li class="active"><a href="">client Info</a></li>
-                        <li><a href="transaction.php">Make Transaction</a></li>
-                        <li><a href="backend.php">Admin</a></li>
+                        <li><a href="">Make Transaction</a></li>
                         <!-- <li><a href="">Manage administrators</a></li>-->
                     </ul>
                 </div>
-                <div class="col-sm-10">
+                <div class="col-sm-10" style="width: 50%">
                     <h1 style="color: #000000">View Client information</h1>
                     <?php
                         echo message();
