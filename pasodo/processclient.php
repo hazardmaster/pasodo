@@ -16,7 +16,7 @@ echo SuccessMessage();
             $result = $conn->query($sqlcat);
             $datarow = $result->fetch_assoc();
         $catID = $datarow["ID"];
-        $imagename = $_FILES['image']['name'];
+        $imagename =addslashes(file_get_contents($_FILES['image']['tmp_name']));
         $tmpname = $_FILES['image']['tmp_name'];
         
         if(empty('$clientId')){

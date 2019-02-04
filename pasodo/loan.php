@@ -77,7 +77,12 @@
                             <section id="clientImage">
                                 <div class="row">
                                     <center>
-                                        <img src="img/mathe.jpg" height="200px" width="200px">
+                                        <?php
+                                        $sqlQuery = "SELECT * FROM client2 WHERE clientID = $clientID";
+                                        $rs = $conn->query($sqlQuery);
+                                        $result=mysqli_fetch_array($rs);
+                                        echo '<img src="data:image/jpeg;base64,'.base64_encode( stripslashes($result['image']) ).'" width="300" height="300"" />';
+                                        ?>
                                     </center>
                                     
                                 </div>
