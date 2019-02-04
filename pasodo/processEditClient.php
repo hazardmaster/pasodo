@@ -18,44 +18,46 @@ if (isset($_POST["submit"])) {
         
         if(empty('$clientId')){
             $_SESSION["ErrorMessage"] = "client id missing";
-            header ("Location:backend.php");
+            header ("Location:categories.php");
            exit;
        } 
        if(empty("$firstName")){
             $_SESSION["ErrorMessage"] = "first name missing";
-            header ("Location:backend.php");
+            header ("Location:categories.php");
            exit;
        } 
        if(empty("$middleName")){
             $_SESSION["ErrorMessage"] = "middle name missing";
-            header ("Location:backend.php");
+            header ("Location:categories.php");
            exit;
        } 
        if(empty("$lastName")){
             $_SESSION["ErrorMessage"] = "last name missing";
-            header ("Location:backend.php");
+            header ("Location:categories.php");
            exit;
        } 
        if(empty("$gender")){
             $_SESSION["ErrorMessage"] = "gender missing";
-            header ("Location:backend.php");
+            header ("Location:categories.php");
            exit;
        } 
        if(empty("$category")){
             $_SESSION["ErrorMessage"] = "category missing";
-            header ("Location:backend.php");
+            header ("Location:categories.php");
            exit;
        }
        if(empty("$phoneNumber")){
             $_SESSION["ErrorMessage"] = "Phone number missing";
-            header ("Location:backend.php");
+            header ("Location:categories.php");
            exit;
        }
        if(empty("$image")){            
             $_SESSION["ErrorMessage"] = "Image file is missing";
-            header ("Location:backend.php");
+            header ("Location:categories.php");
            exit;
-       }
+       }?>
+
+       <?php
 
             //Check authenticity of user ID
 
@@ -74,11 +76,11 @@ if (isset($_POST["submit"])) {
             $execute = $stmt->execute();
              if($execute){                
                 $_SESSION["SuccessMessage"] = "Entry successful";
-                header("Location:backend.php");
+                header("Location:categories.php");
                 exit;
                 }else{
                     $_SESSION["message"] = "Entry error";
-                    header("Location:backend.php");
+                    header("Location:categories.php");
                     exit;
                 } 
             $stmt->close();
@@ -86,7 +88,7 @@ if (isset($_POST["submit"])) {
                         
 }else{
     $_SESSION["ErrorMessage"] = "Form not set to submit";
-    header ("Location:backend.php");
+    header ("Location:categories.php");
     exit;
 }
         

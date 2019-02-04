@@ -12,28 +12,10 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
     </head>
     <body>
         <!--Top navigation bar -->
-        <div class="navbar navbar-inverse">
-                <div class="navbar-header" style="padding: 0px">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <center>
-                        <a class="" href="index.php"><img src="img/pasodo5.jpg" alt="" width=150px height="full" /></a>
-                    </center>
-                        
-                </div>
-                <div class="navbar-collapse collapse ">
-                    <ul class="nav navbar-nav">
-                            
-                        <li><a href="index.php">Loan Officer</a></li>
-                            
-                        <li><a href="backend.php">Admin</a></li>
-
-                    </ul>
-                </div>
-            </div>
+        <?php 
+            include('myHTML/simple_html_dom.php');
+            echo file_get_html('myHTML/navbar.html');
+             ?>
         <!--The Body part -->
         <div class="container-fluid">
             <div class="row">
@@ -44,7 +26,7 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                         <li><a href="categories.php">View Categories</a></li>
                         <li><a href="transactionapproval.php">Approve transactions</a></li>
                         <li><a href="">Manage administrators</a></li>
-                        <li><a href="index.php">Front end</a></li>
+                        <li><a href="homepage.php">Front end</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-10">
@@ -136,7 +118,7 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                                 <!--Client Image for Authentication of Information-->
                                 <div class="form-group">
                                     <label for="image">Client Image:</label>
-                                    <input class="form-control" value="<?php echo $image; ?>" type="file" name="image" id="image" >
+                                    <input class="form-control" value="" type="file" name="image" id="image" >
                                 </div><br><br>
                                 <input type="hidden" name="ID" value="<?php echo $ID; ?>">
                                 
@@ -169,11 +151,14 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                                                 if(middleNameLength > 2 ){
                                                     if(lastNameLength > 2){
                                                         return confirm("Confirm if you want to submit");
+                                                        return this.submit();
                                                     }else{
                                                         alert(" last name cannot be less than 3 letters");
+                                                        return false;
                                                     }
                                                 }  else{
                                                     alert("middle name cannot be less than 3 letters");
+                                                    return false;
                                                 }  
                                              }else{
                                                 alert("first name cannot be less than 3 letters");
@@ -194,7 +179,7 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
 
         <div id="footer" style="position: relative; bottom: 0; width: 1360px;">
             <hr><p>Brain Behind | Oscar Hazard | &copy;2018  --- All rights reserved</p>
-            <a style="color:white; text-decoration: none; cursor:pointer; fontweight:bold;" href="index.php">Pasodo</a>
+            <a style="color:white; text-decoration: none; cursor:pointer; fontweight:bold;" href="homepage.php">Pasodo</a>
             <p>This site is only for use by PASODO finance group. All rights reseved. No one is allowed to make a copy of this site.</p>
         </div>
         <div style="height: 10px; background: #27AAE1;"></div>

@@ -1,141 +1,115 @@
-<?php $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
-<?php require_once("include/sessions.php");?>
 <?php
-  // DB Credentials
-  define('DB_SERVER', 'localhost');
-  define('DB_USERNAME', 'root');
-  define('DB_PASSWORD', '');
-  define('DB_NAME', 'pasodo');
+  // Include db config
+  require_once("include/PDO_DBConnect.php");
 
-  // Attempt to connect to MySQL with PDO
-  try {
-    $pdo = new PDO("mysql:host=" . DB_SERVER . ";dbname=" . DB_NAME, DB_USERNAME, DB_PASSWORD);
-  } catch(PDOException $e) {
-    die("ERROR: Could not connect. " . $e->getMessage());
-  }
-  ?>
+  // Init vars
+  $userName = $password = '';
+  $userName_err = $password_err = '';
 
-<?php 
-    if($_SERVER['REQUEST_METHOD'] === 'POST'){
-        $clientID = $_POST["clientID"];
-        if (empty($clientID)) {
-            $_SESSION["ErrorMessage"] = "Empty input";
-            header('Location: index.php');
-            exit;
-        }else{
-            //Check existence of ID in the database PDO used
-            $clientID = $_POST['clientID'];
-            $sql = "SELECT clientID FROM client2 WHERE clientID = '$clientID' ";
+  // Process form when post submit
+  if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    // Sanitize POST
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-            //Prepare statement
-            if($stmt = $pdo->prepare($sql)){
-                //Attempt to execute statement
-                if($stmt->execute())
-                    //check if ID exists
-                    if($stmt->rowCount() === 1){
-                        if($datarows = $stmt->fetch()){
-                            $clientID = $datarows["clientID"];
-                            //Start session for the specific ID
-                            session_start();
-                            $_SESSION["clientID"] = $clientID;
-                            header("Location: loan.php");
-                        }
+    // Put post vars in regular vars
+    $userName = trim($_POST['userName']);
+    $password = trim($_POST['password']);
 
-                    }else{
-                        $_SESSION['ErrorMessage'] = "CLient not found";
-                        header("Location: index.php");
-                        exit;
-                    }
-                       
+    // Validate email
+    if(empty($userName)){
+      $userName_err = 'Please enter email';
+    }
+
+    // Validate password
+    if(empty($password)){
+      $password_err = 'Please enter password';
+    }
+
+    // Make sure errors are empty
+    if(empty($email_err) && empty($password_err)){
+      // Prepare query
+      $sql = 'SELECT userName, password FROM authenticatedusers WHERE userName = :userName';
+
+      // Prepare statement
+      if($stmt = $conn->prepare($sql)){
+        // Bind params
+        $stmt->bindParam(':userName', $userName, PDO::PARAM_STR);
+
+        // Attempt execute
+        if($stmt->execute()){
+          // Check if email exists
+          if($stmt->rowCount() === 1){
+            if($row = $stmt->fetch()){
+              $databasepassword = $row['password'];
+              if($databasepassword == $password){
+                // SUCCESSFUL LOGIN
+                session_start();
+                $_SESSION['userName'] = $userName;
+                if($userName == "oscar"){
+                  header('location: homepage.php');
+                }elseif ($userName == "admin") {
+                  header('location: backend.php');
                 }else{
-                    //close statement
-                    unset($stmt);
-                }
-            }
-        }         
-    
-?>
-<!DOCTYPE>
-
-<html>
-    <head>
-        <title>Categories</title>
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/backend.css">
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        
-    </head>
-    <body>
-        <div class="navbar navbar-inverse">
-                <div class="navbar-header" style="padding: 0px">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <center>
-                        <a class="" href="index.php"><img src="img/pasodo5.jpg" alt="" width=150px height="full" /></a>
-                    </center>
-                        
-                </div>
-                <div class="navbar-collapse collapse ">
-                    <ul class="nav navbar-nav">
-                            
-                        <li><a href="index.php">Loan Officer</a></li>
-                            
-                        <li><a href="backend.php">Admin</a></li>                    
-
-                    </ul>
-                </div>
-            </div>
-        
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-2">
-                   <!--<h3 style="color:white">Super Admin!!!</h3>-->
-                    <ul id="side_menu" class="nav nav-pills nav-stacked">
-                        <li class="active"><a href="">client Info</a></li>
-                        <li><a href="">Make Transaction</a></li>
-                        <!-- <li><a href="">Manage administrators</a></li>-->
-                    </ul>
-                </div>
-                <div class="col-sm-10" style="width: 50%">
-                    <h1 style="color: #000000">View Client information</h1>
-                    <?php
-                        echo message();
-                        echo SuccessMessage();
-                    ?>
-                    <!--Input CLient ID to view their Payment details-->
-                    <form style="form-control" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" onsubmit="return validateForm()">
-                        <div class="form-group">
-                            <input type="Number" name="clientID" id="clientID" placeholder="Enter client ID" >                        
-                            <input class="btn btn-info btn-large" name="submit" type="submit" value="view client info" >
-                        </div>               
-                    </form>                 
-                </div>
-            </div><!-- Ending of row-->
-            <script>
-                function validateForm(){
-                    var clientID = document.getElementById('clientID').value;
-                    if(clientID.length > 0){
-                        return confirm("proceed");
-                        return true;
-                    }else{
-                        alert("EMPTY Input");
-                        return false;
-                    }
+                  echo "Unauthorised user";
                 }
                 
+              } else {
+                // Display wrong password message
+                $password_err = 'The password you entered is not valid';
+              }
+            }
+          } else {
+            $userName_err = 'User not found';
+          }
+        } else {
+          die('Something went wrong');
+        }
+      }
+      // Close statement
+      unset($stmt);
+    }
 
-            </script>
-        </div><!-- ending of container-->
-        <div id="footer" style="position: fixed; bottom: 0; width: 1360px;">
-            <hr><p>Brain Behind | Oscar Hazard | &copy;2018  --- All rights reserved</p>
-            <a style="color:white; text-decoration: none; cursor:pointer; fontweight:bold;" href="http://pasodo.com">Pasodo</a>
-            <p>This site is only for use by PASODO finance group. All rights reseved. No one is allowed to make a copy of this site.</p>
+    // Close connection
+    unset($conn);
+  }
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+  <title>Pasodo Login Page</title>
+</head>
+<body style="background-color: #2f4050">
+  <div class="container">
+    <div class="row" style="margin-top: 200px">
+      <div class="col-md-6 mx-auto">
+        <div class="card card-body bg-light mt-5">
+          <h2><i><b>WELCOME TO PASODO</b></i></h2>
+          <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">   
+            <div class="form-group">
+              <label for="userName">User Name</label>
+              <input type="userName" name="userName" class="form-control form-control-lg <?php echo (!empty($userName_err)) ? 'is-invalid' : ''; ?>" value="">
+              <span class="invalid-feedback"><?php echo $userName_err; ?></span>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" name="password" class="form-control form-control-lg <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="">
+              <span class="invalid-feedback"><?php echo $password_err; ?></span>
+            </div>
+            <div class="form-row">
+              <div class="col">
+                <input type="submit" value="Login" class="btn btn-success btn-block">
+              </div>              
+            </div>
+          </form>
         </div>
-        <div style="height: 10px; background: #27AAE1;"></div>
-    </body>
-
+      </div>
+    </div>
+  </div>
+</body>
 </html>

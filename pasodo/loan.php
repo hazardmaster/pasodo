@@ -21,14 +21,14 @@
                         <span class="icon-bar"></span>
                     </button>
                     <center>
-                        <a class="" href="index.php"><img src="img/pasodo5.jpg" alt="" width=150px height="full" /></a>
+                        <a class="" href="homepage.php"><img src="img/pasodo5.jpg" alt="" width=150px height="full" /></a>
                     </center>
                         
                 </div>
                 <div class="navbar-collapse collapse ">
                     <ul class="nav navbar-nav">
                             
-                        <li><a href="index.php">Loan Officer</a></li>
+                        <li><a href="homepage.php">Loan Officer</a></li>
                             
                         <li><a href="backend.php">Admin</a></li>                      
 
@@ -45,7 +45,7 @@
                 <div class="col-sm-2">
                    <!--<h3 style="color:white">Super Admin!!!</h3>-->
                     <ul id="side_menu" class="nav nav-pills nav-stacked">
-                        <li class="active"><a href="index.php">client Info</a></li>
+                        <li class="active"><a href="homepage.php">client Info</a></li>
                         <li><a href="">Make Transaction</a></li>
                         <!-- <li><a href="">Manage administrators</a></li>-->
                     </ul>

@@ -47,28 +47,10 @@
     </head>
     <body>
         <!--Top navigation bar -->
-        <div class="navbar navbar-inverse">
-                <div class="navbar-header" style="padding: 0px">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <center>
-                        <a class="" href="index.php"><img src="img/pasodo5.jpg" alt="" width=150px height="full" /></a>
-                    </center>
-                        
-                </div>
-                <div class="navbar-collapse collapse ">
-                    <ul class="nav navbar-nav">
-                            
-                        <li><a href="index.php">Loan Officer</a></li>
-                            
-                        <li><a href="backend.php">Admin</a></li>
-
-                    </ul>
-                </div>
-            </div>
+        <?php 
+            include('myHTML/simple_html_dom.php');
+            echo file_get_html('myHTML/navbar.html');
+             ?>
         <!--The Body part -->
         <div class="container-fluid">
             <div class="row">
