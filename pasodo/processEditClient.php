@@ -1,8 +1,8 @@
 <?php
     $conn = mysqli_connect("localhost", "root", "", "pasodo");
     require_once("include/sessions.php");
-
-        $clientId = $_POST["clientId"];
+if (isset($_POST["submit"])) {
+    $clientId = $_POST["clientId"];
         $firstName = $_POST["firstName"];
         $middleName = $_POST["middleName"];
         $lastName = $_POST["lastName"];     
@@ -84,6 +84,12 @@
             $stmt->close();
             $conn->close();
                         
+}else{
+    $_SESSION["ErrorMessage"] = "Form not set to submit";
+    header ("Location:backend.php");
+    exit;
+}
+        
     
     
         

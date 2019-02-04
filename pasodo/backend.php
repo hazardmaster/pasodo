@@ -118,9 +118,9 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
 
                                 <!--Client Image for Authentication of Information-->
                                 <div class="form-group">
-                                    <label for="image">Client Image:</label>
-                                    <input class="form-control" type="file" name="imageName" id="imageName" >
-                                </div><br><br>
+                                    <label for="image">Client Image</label>
+                                    <input class="form-control" type="file" name="image" id="image" >
+                                </div><br><br> 
                                 
                                 <!--Submit Client Information-->
                                 <input class="btn btn-success btn-block" type="submit" name="submit" value="Add new client"  >
