@@ -1,16 +1,15 @@
 <?php $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
-<?php require_once("include/sessions.php");?>
+<?php require_once("../include/sessions.php");?>
 
 <!DOCTYPE>
 
 <html>
     <head>
         <title>Categories</title>
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/backend.css">
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/backend.css">
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>        
     </head>
     <body>
         <div class="navbar navbar-inverse">
@@ -21,16 +20,16 @@
                         <span class="icon-bar"></span>
                     </button>
                     <center>
-                        <a class="" href="homepage.php"><img src="img/pasodo5.jpg" alt="" width=150px height="full" /></a>
+                        <a class="" href="../index.php"><img src="../img/pasodo5.jpg" alt="" width=150px height="full" /></a>
                     </center>
                         
                 </div>
                 <div class="navbar-collapse collapse ">
                     <ul class="nav navbar-nav">
                             
-                        <li><a href="homepage.php">Loan Officer</a></li>
+                        <li><a href="index.php">Loan Officer</a></li>
                             
-                        <li><a href="backend.php">Admin</a></li>                      
+                        <li><a href="../backend.php">Admin</a></li>                      
 
                     </ul>
                         <li style="float: right;"><a href="processNewLoan.php?id=<?php
@@ -45,7 +44,7 @@
                 <div class="col-sm-2">
                    <!--<h3 style="color:white">Super Admin!!!</h3>-->
                     <ul id="side_menu" class="nav nav-pills nav-stacked">
-                        <li class="active"><a href="homepage.php">client Info</a></li>
+                        <li class="active"><a href="index.php">client Info</a></li>
                         <li><a href="">Make Transaction</a></li>
                         <!-- <li><a href="">Manage administrators</a></li>-->
                     </ul>
@@ -103,7 +102,7 @@
                                                     <div class="newloan">
                                                         <a href="processNewLoan.php?id=<?php
                                                              echo $clientID; ?>" 
-                                                             class="btn btn-success btn-large" style="text-decoration: none;" ><span><img src="img/new-loan-icon.png" width="40px" height="40px"></span> NEW LOAN
+                                                             class="btn btn-success btn-large" style="text-decoration: none;" ><span><img src="../img/new-loan-icon.png" width="40px" height="40px"></span> NEW LOAN
                                                         </a>
                                                     </div>
                                                 </div>
@@ -111,7 +110,7 @@
                                                     <div class="payloan">
                                                         <a href="processPayLoan.php?id=<?php
                                                              echo $clientID; ?>" 
-                                                             class="btn btn-danger btn-large" style="text-decoration: none;" ><span><img src="img/pay-loan-icon.png" width="40px" height="40px"></span>PAY LOAN
+                                                             class="btn btn-danger btn-large" style="text-decoration: none;" ><span><img src="../img/pay-loan-icon.png" width="40px" height="40px"></span>PAY LOAN
                                                         </a>
                                                     </div>
                                                 </div>                                     
@@ -126,9 +125,9 @@
                                                                 $sql = "SELECT SUM(amount) AS totalAmount FROM loan WHERE clientID = '$clientID' ";
                                                                 $result = $conn->query($sql);
                                                                 if($result){
-                                                                    $datarows = $result->fetch_assoc();
-                                                                    $totalLoanAmount = $datarows['totalAmount'];
-                                                                    echo $totalLoanAmount;                                                                   
+                                                                        $datarows = $result->fetch_assoc();
+                                                                        $totalLoanAmount = $datarows['totalAmount'];
+                                                                        echo $totalLoanAmount;                                                                
                                                                 }else{
                                                                     echo "invalid";
                                                                 }
@@ -239,7 +238,7 @@
         </div><!-- ending of container-->
         <div id="footer" style="position: relative; bottom: 0; width: 1360px;">
             <hr><p>Brain Behind | Oscar Hazard | &copy;2018  --- All rights reserved</p>
-            <a style="color:white; text-decoration: none; cursor:pointer; fontweight:bold;" href="http://pasodo.com">Pasodo</a>
+            <a style="color:white; text-decoration: none; cursor:pointer; fontweight:bold;" href="/">Pasodo</a>
             <p>This site is only for use by PASODO finance group. All rights reseved. No one is allowed to make a copy of this site.</p>
         </div>
         <div style="height: 10px; background: #27AAE1;"></div>

@@ -1,17 +1,4 @@
-
-<!DOCTYPE html>
-<html>
-<body>
-
 <?php
-$xml=simplexml_load_file("note.xml") or die("Error: Cannot create object");
-    foreach($xml->children() as $books){
-    echo $books->title."<br>";
-    echo $books->author."<br>";
-    echo $books->year."<br>";
-    echo $books->price."<br>";
-}
+$file = "briangrad.jpg"; //Let say If I put the file name Bang.png
+echo "<a href='borrow.php?nama=".$file."'>download</a> ";
 ?>
-
-</body>
-</html

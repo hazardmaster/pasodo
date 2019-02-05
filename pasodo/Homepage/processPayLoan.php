@@ -1,5 +1,5 @@
 <?php $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
-<?php require_once("include/sessions.php");?>
+<?php require_once("../include/sessions.php");?>
 
 <?php 
     $clientID = $_GET["id"];
@@ -38,16 +38,16 @@
 <html>
     <head>
         <title>Loan Payment</title>
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/backend.css">
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/backend.css">
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
         
     </head>
     <body>
         <?php 
-            include('myHTML/simple_html_dom.php');
-            echo file_get_html('myHTML/navbar.html');
+            include('../myHTML/simple_html_dom.php');
+            echo file_get_html('../myHTML/navbar.html');
              ?>
         
         <div class="container-fluid">
@@ -55,7 +55,7 @@
                 <div class="col-sm-2">
                    <!--<h3 style="color:white">Super Admin!!!</h3>-->
                     <ul id="side_menu" class="nav nav-pills nav-stacked">
-                        <li><a href="homepage.php">client Info</a></li>
+                        <li><a href="index.php">client Info</a></li>
                         <li><a href="">Make Transaction</a></li>
                         <!-- <li><a href="">Manage administrators</a></li>-->
                     </ul>
@@ -102,7 +102,7 @@
         </div><!-- ending of container-->
         <div id="footer" style="position: fixed; bottom: 0; width: 1360px;">
             <hr><p>Brain Behind | Oscar Hazard | &copy;2018  --- All rights reserved</p>
-            <a style="color:white; text-decoration: none; cursor:pointer; fontweight:bold;" href="http://pasodo.com">Pasodo</a>
+            <a style="color:white; text-decoration: none; cursor:pointer; fontweight:bold;" href="/">Pasodo</a>
             <p>This site is only for use by PASODO finance group. All rights reseved. No one is allowed to make a copy of this site.</p>
         </div>
         <div style="height: 10px; background: #27AAE1;"></div>

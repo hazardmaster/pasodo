@@ -1,7 +1,7 @@
 <?php
 
     $conn = mysqli_connect("localhost", "root", "", "pasodo");
-    require_once("include/sessions.php");
+    require_once("../include/sessions.php");
      echo message();
 echo SuccessMessage();
     if(isset($_POST["submit"])){
@@ -21,42 +21,42 @@ echo SuccessMessage();
         
         if(empty('$clientId')){
             $_SESSION["ErrorMessage"] = "clientID missing";
-            header("Location:backend.php");
+            header("Location:index.php");
             exit;
         }
         if (empty("$firstName")) {
             $_SESSION["ErrorMessage"] = "firstName missing";
-            header("Location:backend.php");
+            header("Location:index.php");
                     exit;
         }
         if (empty("$middleName")) {
             $_SESSION["ErrorMessage"] = "middleName missing";
-            header("Location:backend.php");
+            header("Location:index.php");
                     exit;
         }
         if (empty("$lastName")) {
             $_SESSION["ErrorMessage"] = "lastName missing";
-            header("Location:backend.php");
+            header("Location:index.php");
                     exit;
         }
         if (empty("$gender")) {
             $_SESSION["ErrorMessage"] = "gender missing";
-            header("Location:backend.php");
+            header("Location:index.php");
                     exit;
         }
         if (empty("$category")) {
             $_SESSION["ErrorMessage"] = "category missing";
-            header("Location:backend.php");
+            header("Location:index.php");
                     exit;
         }
         if (empty("$phoneNumber")) {
             $_SESSION["ErrorMessage"] = "phone missing";
-            header("Location:backend.php");
+            header("Location:index.php");
                     exit;
         }
         if (empty("$imagename")) {
             $_SESSION["ErrorMessage"] = "image missing";
-            header("Location:backend.php");
+            header("Location:index.php");
                     exit;
         }
             //Check authenticity of user ID          
@@ -119,11 +119,11 @@ echo SuccessMessage();
         //end of image upload processing
 
                     $_SESSION["SuccessMessage"] = "Entry Successful";
-                    header("Location:backend.php");
+                    header("Location:index.php");
                     exit;
                     }else{
                         $_SESSION["ErrorMessage"] = "Entry error";
-                        header("Location:backend.php");
+                        header("Location:index.php");
                         exit;
                     } 
                 $stmt->close();

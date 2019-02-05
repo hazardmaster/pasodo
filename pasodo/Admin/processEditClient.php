@@ -1,8 +1,8 @@
 <?php
     $conn = mysqli_connect("localhost", "root", "", "pasodo");
-    require_once("include/sessions.php");
+    require_once("../include/sessions.php");
 if (isset($_POST["submit"])) {
-    $clientId = $_POST["clientId"];
+        $clientId = $_POST["clientId"];
         $firstName = $_POST["firstName"];
         $middleName = $_POST["middleName"];
         $lastName = $_POST["lastName"];     

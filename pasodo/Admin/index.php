@@ -1,20 +1,23 @@
-<?php require_once("include/sessions.php"); 
-$conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
-?>
+<?php require_once("../include/sessions.php"); 
+$conn = mysqli_connect("localhost", "root", "", "pasodo"); 
+include('../myHTML/simple_html_dom.php');
+if(!isset($_SESSION['userName']) || empty($_SESSION['userName'])){
+    header('location: index.php');
+    exit;
+    }?>
+
 <!DOCTYPE>
 <html>
     <head>
-        <title>Edit</title>        
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/clientForm.css">
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>        
+        <title>Admin Back End</title>        
+        <?php           
+            echo file_get_html('../myHTML/myLinks.html');
+             ?>        
     </head>
     <body>
         <!--Top navigation bar -->
-        <?php 
-            include('myHTML/simple_html_dom.php');
-            echo file_get_html('myHTML/navbar.html');
+        <?php           
+            echo file_get_html('../myHTML/navbar.html');
              ?>
         <!--The Body part -->
         <div class="container-fluid">
@@ -22,44 +25,27 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                 <div class="col-sm-2">
                     <!--<h3 style="color:white">Super Admin!!!</h3>-->
                     <ul id="side_menu" class="nav nav-pills nav-stacked">
-                        <li><a href="backend.php">Add new client</a></li>
+                        <li class="active"><a href="index.php">Add new client</a></li>
                         <li><a href="categories.php">View Categories</a></li>
                         <li><a href="transactionapproval.php">Approve transactions</a></li>
                         <li><a href="">Manage administrators</a></li>
-                        <li><a href="homepage.php">Front end</a></li>
+                        <li><a href="../Homepage.php">Front end</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-10">
-                    <h1>Edit Client Information</h1>
+                    <h1>Add New Client</h1>
                     <div> <?php echo message(); 
                                 echo SuccessMessage();
                         ?> </div>
                     <div>
-                    <!--Pick Client data as saved in the database-->
-                        <?php
-                            $ID = $_GET["id"];
-                            $sql = "SELECT * FROM client2 WHERE ID = '$ID' ";
-                            $result = $conn->query($sql);
-                            while($datarows = $result->fetch_assoc()){
-                                $clientID = $datarows["clientID"];
-                                $firstName = $datarows["firstName"];
-                                $middleName = $datarows["middleName"];
-                                $lastName = $datarows["lastName"];
-                                $phone = $datarows["phone"]; 
-                                $gender = $datarows["gender"];
-                                $category = $datarows["category_id"];
-                                $image = $datarows["image"];
-
-                                ?>    
-
                         <!--Form for entering client information-->
-                        <form action="processEditClient.php"  name="clientForm" id="clientForm" onsubmit="formValidation()">                        
+                        <form action="processclient.php" method="POST" onsubmit="formValidation()"  name="clientForm" id="clientForm" enctype="multipart/form-data">                        
                             <fieldset>
 
                                 <!--Client ID-->
                                 <div class="form-group">
                                     <label for="id_number">ID Number:</label>
-                                    <input class="form-control" value="<?php echo $clientID; ?>" type="text" name="clientId" id="clientId"  >
+                                    <input class="form-control" value="23547689" type="text" name="clientId" id="clientId" placeholder="ID number" >
                                 </div><br><br> 
 
                                 <!--Client Full names-->
@@ -68,15 +54,15 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <label for="firstName">First name:</label>
-                                            <input class="" type="text" name="firstName" id="firstName" value="<?php echo $firstName; ?>">
+                                            <input class="" type="text" name="firstName" id="firstName" placeholder="First Name" value="Jane">
                                         </div>
                                         <div class="col-sm-4">
                                             <label for="middleName">Middle name:</label>
-                                            <input class="" type="text" name="middleName" id="middleName" value="<?php echo $middleName; ?>">
+                                            <input class="" type="text" name="middleName" id="middleName" placeholder="Middle Name" value="Hazard">
                                         </div>
                                         <div class="col-sm-4">
                                             <label for="lastName">Last name:</label>
-                                            <input class="" type="text" name="lastName" id="lastName" value="<?php echo $lastName; ?>">
+                                            <input class="" type="text" name="lastName" id="lastName" placeholder="Last Name" value="Doe">
                                         </div>
                                     </div>                            
                                 </div><br><br> 
@@ -84,21 +70,21 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                                <!--Client Phone number-->
                                 <div class="form-group">
                                     <label for="phonenumber">Phone number:</label>
-                                    <input class="form-control" type="text" name="phoneNumber" id="phoneNumber" value="<?php echo $phone; ?>" >
+                                    <input class="form-control" type="text" name="phoneNumber" id="phoneNumber" value="0724657487" placeholder="Phone number">
                                 </div><br><br> 
 
                                 <!--Client Gender-->
                                 <div class="form-group">
                                     <label for="gender">Gender:</label><br>
-                                    <input type="radio" name="gender" value="<?php echo $gender; ?>"> Male<br>
-                                    <input type="radio" name="gender" value="<?php echo $gender; ?>"> Female<br>
-                                    <input type="radio" name="gender" value="<?php echo $gender; ?>"> Other
+                                    <input type="radio" name="gender" value="male"> Male<br>
+                                    <input type="radio" name="gender" value="female"> Female<br>
+                                    <input type="radio" name="gender" value="other"> Other
                                 </div><br>
 
                                 <!--Client category-->
                                 <div class="form-group">
                                     <label>Categories: </label><br>                                
-                                    <select value = "<?php echo $category; ?>" name="category">
+                                    <select value = "category" name="category">
                                         <?php                                    
                                             $sql = "SELECT * FROM category";
                                             $result = $conn->query($sql);
@@ -117,13 +103,12 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
 
                                 <!--Client Image for Authentication of Information-->
                                 <div class="form-group">
-                                    <label for="image">Client Image:</label>
-                                    <input class="form-control" value="" type="file" name="image" id="image" >
-                                </div><br><br>
-                                <input type="hidden" name="ID" value="<?php echo $ID; ?>">
+                                    <label for="image">Client Image</label>
+                                    <input class="form-control" type="file" name="image" id="image" >
+                                </div><br><br> 
                                 
                                 <!--Submit Client Information-->
-                                <input class="btn btn-success btn-block" type="submit" name="submit"   >
+                                <input class="btn btn-success btn-block" type="submit" name="submit" value="Add new client"  >
                                 <br>
                                 
                             </fieldset>
@@ -151,14 +136,11 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
                                                 if(middleNameLength > 2 ){
                                                     if(lastNameLength > 2){
                                                         return confirm("Confirm if you want to submit");
-                                                        return this.submit();
                                                     }else{
                                                         alert(" last name cannot be less than 3 letters");
-                                                        return false;
                                                     }
                                                 }  else{
                                                     alert("middle name cannot be less than 3 letters");
-                                                    return false;
                                                 }  
                                              }else{
                                                 alert("first name cannot be less than 3 letters");
@@ -170,7 +152,6 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
 
                             </script>
                         </form>
-                        <?php } ?>
                     </div>
                 </div><!--ending of col 10-->
             </div><!-- Ending of row-->            
@@ -179,7 +160,7 @@ $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
 
         <div id="footer" style="position: relative; bottom: 0; width: 1360px;">
             <hr><p>Brain Behind | Oscar Hazard | &copy;2018  --- All rights reserved</p>
-            <a style="color:white; text-decoration: none; cursor:pointer; fontweight:bold;" href="homepage.php">Pasodo</a>
+            <a style="color:white; text-decoration: none; cursor:pointer; fontweight:bold;" href="/">Pasodo</a>
             <p>This site is only for use by PASODO finance group. All rights reseved. No one is allowed to make a copy of this site.</p>
         </div>
         <div style="height: 10px; background: #27AAE1;"></div>

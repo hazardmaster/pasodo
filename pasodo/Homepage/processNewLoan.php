@@ -1,15 +1,15 @@
 <?php $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
-<?php require_once("include/sessions.php");?>
+<?php require_once("../include/sessions.php");?>
 
 <!DOCTYPE>
 
 <html>
     <head>
         <title>Loan Application Form</title>
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/backend.css">
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/backend.css">
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
         
     </head>
     <body>
@@ -21,16 +21,16 @@
                         <span class="icon-bar"></span>
                     </button>
                     <center>
-                        <a class="" href="homepage.php"><img src="img/pasodo5.jpg" alt="" width=150px height="full" /></a>
+                        <a class="" href="homepage.php"><img src="../img/pasodo5.jpg" alt="" width=150px height="full" /></a>
                     </center>
                         
                 </div>
                 <div class="navbar-collapse collapse ">
                     <ul class="nav navbar-nav">
                             
-                        <li><a href="homepage.php">Loan Officer</a></li>
+                        <li><a href="index.php">Loan Officer</a></li>
                             
-                        <li><a href="backend.php">Admin</a></li>                    
+                        <li><a href="../backend.php">Admin</a></li>                    
 
                     </ul>
                 </div>
