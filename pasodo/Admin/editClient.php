@@ -1,5 +1,6 @@
 <?php require_once("../include/sessions.php"); 
-$conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
+$conn = mysqli_connect("localhost", "root", "", "pasodo"); 
+require_once("adminAuthentication.php");
 ?>
 <!DOCTYPE>
 <html>

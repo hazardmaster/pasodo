@@ -1,6 +1,7 @@
 <?php
     $conn = mysqli_connect("localhost", "root", "", "pasodo");
     require_once("../include/sessions.php");
+require_once("adminAuthentication.php");
 if (isset($_POST["submit"])) {
         $clientId = $_POST["clientId"];
         $firstName = $_POST["firstName"];

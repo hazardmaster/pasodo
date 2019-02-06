@@ -1,7 +1,7 @@
 <?php
-
     $conn = mysqli_connect("localhost", "root", "", "pasodo");
     require_once("../include/sessions.php");
+    require_once("adminAuthentication.php");
      echo message();
 echo SuccessMessage();
     if(isset($_POST["submit"])){

@@ -1,10 +1,9 @@
 <?php require_once("../include/sessions.php"); 
 $conn = mysqli_connect("localhost", "root", "", "pasodo"); 
 include('../myHTML/simple_html_dom.php');
-if(!isset($_SESSION['userName']) || empty($_SESSION['userName'])){
-    header('location: ../index.php');
-    exit;
-    }?>
+require_once("adminAuthentication.php");
+    ?>
+
 
 <!DOCTYPE>
 <html>
@@ -18,6 +17,7 @@ if(!isset($_SESSION['userName']) || empty($_SESSION['userName'])){
         <!--Top navigation bar -->
         <?php           
             echo file_get_html('../myHTML/navbar.html');
+
              ?>
         <!--The Body part -->
         <div class="container-fluid">
@@ -33,6 +33,10 @@ if(!isset($_SESSION['userName']) || empty($_SESSION['userName'])){
                     </ul>
                 </div>
                 <div class="col-sm-10">
+
+                     <li style="float: right;">
+                    <a href="../include/sessionsDestroy.php?userName=<?php echo $_SESSION['userName']; ?>" class="btn btn-danger btn-small" style="background-color: green" >Logout
+                    </a>
                     <h1>Add New Client</h1>
                     <div> <?php echo message(); 
                                 echo SuccessMessage();
@@ -157,6 +161,7 @@ if(!isset($_SESSION['userName']) || empty($_SESSION['userName'])){
             </div><!-- Ending of row-->            
 
         </div><!-- ending of container-->
+
 
         <div id="footer" style="position: relative; bottom: 0; width: 1360px;">
             <hr><p>Brain Behind | Oscar Hazard | &copy;2018  --- All rights reserved</p>
