@@ -1,16 +1,22 @@
-<?php
-$name= $_GET['nama'];
+<!DOCTYPE html>
+<html>
+<body>
 
-    header('Content-Description: File Transfer');
-    header('Content-Type: application/force-download');
-    header("Content-Disposition: attachment; filename=\"" . basename($name) . "\";");
-    header('Content-Transfer-Encoding: binary');
-    header('Expires: 0');
-    header('Cache-Control: must-revalidate');
-    header('Pragma: public');
-    header('Content-Length: ' . filesize($name));
-    ob_clean();
-    flush();
-    readfile("img/".$name); //showing the path to the server where the file is to be download
-    exit;
-?>
+<h1>My First Google Map</h1>
+
+<div id="googleMap" style="width:100%;height:400px;"></div>
+
+<script>
+function myMap() {
+var mapProp= {
+  center:new google.maps.LatLng(51.508742,-0.120850),
+  zoom:5,
+};
+var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=myMap"></script>
+
+</body>
+</html>

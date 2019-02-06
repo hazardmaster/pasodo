@@ -60,7 +60,7 @@
                         <!-- <li><a href="">Manage administrators</a></li>-->
                     </ul>
                 </div>
-                <div class="col-sm-10">
+                <div class="col-sm-10" style="width: 80%">
                     <h1 style="color: #000000">Loan Payment</h1>
                     <?php
                         echo message();

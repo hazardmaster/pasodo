@@ -21,7 +21,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <center>
-                        <a class="" href="homepage.php"><img src="../img/pasodo5.jpg" alt="" width=150px height="full" /></a>
+                        <a class="" href="index.php"><img src="../img/pasodo5.jpg" alt="" width=150px height="full" /></a>
                     </center>
                         
                 </div>
@@ -46,7 +46,7 @@
                         <!-- <li><a href="">Manage administrators</a></li>-->
                     </ul>
                 </div>
-                <div class="col-sm-10">
+                <div class="col-sm-10" style="width: 80%">
                     <h1 style="color: #000000">New Loan Application Form</h1>
                     <?php
                         echo message();

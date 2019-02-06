@@ -2,7 +2,7 @@
 $conn = mysqli_connect("localhost", "root", "", "pasodo"); 
 include('../myHTML/simple_html_dom.php');
 if(!isset($_SESSION['userName']) || empty($_SESSION['userName'])){
-    header('location: index.php');
+    header('location: ../index.php');
     exit;
     }?>
 
