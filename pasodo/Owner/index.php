@@ -55,7 +55,7 @@ include('../myHTML/simple_html_dom.php');
                         <li class="active"><a href="index.php">DASHBOARD</a></li>
                         <li><a href="">TRANSACTIONS</a></li>
                         <li><a href="">SYSTEM USERS</a></li>
-                        <li><a href="">FILTER LOANS</a></li>
+                        <li><a href="filterloans.php">FILTER LOANS</a></li>
                         <li><a href="">TOP DAIRIES</a></li>
                     </ul>
                 </div>

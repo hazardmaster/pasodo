@@ -20,7 +20,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <center>
-                        <a class="" href="../index.php"><img src="../img/pasodo5.jpg" alt="" width=150px height="full" /></a>
+                        <a class="" href="index.php"><img src="../img/pasodo5.jpg" alt="" width=150px height="full" /></a>
                     </center>
                         
                 </div>
@@ -29,13 +29,13 @@
                             
                         <li><a href="index.php">Loan Officer</a></li>
                             
-                        <li><a href="../backend.php">Admin</a></li>                      
+                        <li><a href="../Admin">Admin</a></li>                      
 
                     </ul>
                         <li style="float: right;"><a href="processNewLoan.php?id=<?php
                             $clientID = $_SESSION["clientID"];
                              echo $clientID; ?>" 
-                             class="btn btn-info btn-large" style="background-color: green" >New Loan!</a></li>
+                             class="btn btn-info btn-success" style="margin-top: 5px; margin-right: 40px" >New Loan!</a></li>
                 </div>
             </div>
         
@@ -44,8 +44,14 @@
                 <div class="col-sm-2">
                    <!--<h3 style="color:white">Super Admin!!!</h3>-->
                     <ul id="side_menu" class="nav nav-pills nav-stacked">
-                        <li class="active"><a href="index.php">client Info</a></li>
-                        <li><a href="">Make Transaction</a></li>
+                        <li class="active">
+                            <a href="index.php"><span><img src="../img/client-info.png" height=20px width=20px style="margin-right: 5px"></span>client Info</a>
+                        </li>
+                        <li>
+                            <a href="links/loanDisplay.php"><span><img src="../img/new-loan-icon.png" height=20px width=20px style="margin-right: 5px"></span>Loans</a>
+                        </li>
+                        <li><a href="links/paymentsDisplay.php"><span><img src="../img/payment-icon.png" height=20px width=20px style="margin-right: 5px"></span>Payments</a></li>
+                        <li><a href="links/missedLoanDisplay.php"><span><img src="../img/missed-icon.png" height=20px width=20px style="margin-right: 5px"></span>Missed Payments</a></li>
                         <!-- <li><a href="">Manage administrators</a></li>-->
                     </ul>
                 </div>
