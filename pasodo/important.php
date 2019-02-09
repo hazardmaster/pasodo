@@ -1,26 +1,20 @@
-<link rel="stylesheet" href="https://resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="../css/bootstrap.min.css">
-<link rel="stylesheet" href="../css/clientForm.css">
-<script src="../js/jquery.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
+<?php
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
 
-<script>
-	$(function() {
-		$("#startDate").value();
-	});
-</script>
-<div class="row">
-	<i class="expensicons expensicons-sm expensicons-per-diem"></i>
+$conn = new mysqli("localhost", "root", "", "pasodo");
 
-	<div class="startDate col-sm-12 col-md-6 filter-input">
-		<div class="input-group">
-			<span class="input-group-addon">From</span>
-			<input type="text" id="startDate" name="startDate" class="calendar calendarMedium fullWidth form-control hasDatepicker" value="2019-02-07" autocomplete="off">
-		</div>
-	</div>
+$result = $conn->query("SELECT clientID, firstName, lastName FROM client2");
 
-	<div class="endDate col-sm-12 col-md-6 filter-input"><div class="input-group"><span class="input-group-addon">To</span><input type="text" id="endDate" name="endDate" class="calendar calendarMedium fullWidth form-control hasDatepicker" value="2019-02-07" autocomplete="off"></div>
-	</div>
-</div>
+$outp = "";
+while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
+  if ($outp != "") {$outp .= ",";}
+  $outp .= '{"clientID":"'  . $rs["clientID"] . '",';
+  $outp .= '"firstName":"'   . $rs["firstName"]        . '",';
+  $outp .= '"lastName":"'. $rs["lastName"]     . '"}';
+}
+$outp ='{"records":['.$outp.']}';
+$conn->close();
+
+echo($outp);
+?>

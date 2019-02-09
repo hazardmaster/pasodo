@@ -128,7 +128,7 @@
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 5px">
                                                     <h4 class="" style="font-size: 42px; color: green;">                                                  
                                                             <?php 
-                                                                $sql = "SELECT SUM(amount) AS totalAmount FROM loan WHERE clientID = '$clientID' ";
+                                                                $sql = "SELECT SUM(amount) AS totalAmount FROM loan WHERE clientID = '$clientID' && status = 'approved' ";
                                                                 $result = $conn->query($sql);
                                                                 if($result){
                                                                         $datarows = $result->fetch_assoc();

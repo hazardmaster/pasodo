@@ -82,7 +82,7 @@
                    <!--<h3 style="color:white">Super Admin!!!</h3>-->
                     <ul id="side_menu" class="nav nav-pills nav-stacked">
                         <li class="active"><a href="index.php"><span><img src="../img/client-info.png" height=20px width=20px style="margin-right: 5px"></span>client Info</a></li>
-                        <li><a href="">Make Transaction</a></li>
+                        <li><a href=""><span><img src="../img/inbox-icon.png" height=20px width=20px style="margin-right: 5px"></span>Inbox</a></li>
                         <!-- <li><a href="">Manage administrators</a></li>-->
                     </ul>
                 </div>
