@@ -1,4 +1,4 @@
-<?php $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
+<?php $conn = mysqli_connect("localhost", "pasodomo_oscar", "Oscar3296!!!", "pasodomo_pasodo"); ?>
 <?php
  require_once("../include/sessions.php");
     require_once("adminAuthentication.php");?>
@@ -49,7 +49,7 @@
                                 <th>Action</th>
                             </thead>
                              <?php     
-                                    $sql = "SELECT * FROM loan";
+                                    $sql = "SELECT * FROM loan WHERE status = 'pending' ";
                                     $result = $conn->query($sql);
                                     if($result->num_rows > 0){
                                         while($datarows = $result->fetch_assoc()){

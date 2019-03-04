@@ -1,7 +1,9 @@
-<?php $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
-<?php require_once("../include/sessions.php");?>
+<?php
+        ob_start();
+     $conn = mysqli_connect("localhost", "pasodomo_oscar", "Oscar3296!!!", "pasodomo_pasodo");  
+     require_once("../include/sessions.php");
 
-<?php if(isset($_POST["submit"])){       
+    if(isset($_POST["submit"])){       
 
         //insert client Loan details to the Database using prepared statement
         if($conn->connect_error){
@@ -13,18 +15,25 @@
                     $deadlineDate = $_POST["deadlineDate"];
                     $notes = $_POST["notes"];
             if(!empty($clientID) && !empty($loanAmount) && !empty($image) && !empty($deadlineDate) && !empty($notes)){
+                //working
+                $interestRate = 0.15;
+                $interestAmount = $loanAmount * $interestRate;
+                $amountPlusInterest = $loanAmount + $interestAmount;
                
                 date_default_timezone_set("Africa/nairobi");
                     $date = time();
                     $datetime=strftime("%d-%m-%Y %H:%M:%S", $date);
 
-                $stmt = $conn->prepare("INSERT INTO loan(clientID,amount,created_at,updated_at,deadline_at,image,notes)VALUES(?,?,?,?,?,?,?)");
+                $stmt = $conn->prepare("INSERT INTO loan(clientID,amount,interestRate,interestAmount,amountPlusInterest,created_at,updated_at,deadline_at,image,notes)VALUES(?,?,?,?,?,?,?,?,?,?)");
 
-                $stmt->bind_param("sssssss", $clientID,$loanAmount,$datetime,$datetime,$deadlineDate,$image,$notes);
+                $stmt->bind_param("ssssssssss", $clientID,$loanAmount,$interestRate,$interestAmount,$amountPlusInterest,$datetime,$datetime,$deadlineDate,$image,$notes);
 
                 $execute = $stmt->execute();
                  if($execute){        
-                    $_SESSION["SuccessMessage"] = "Entry successful";       
+                    $_SESSION["SuccessMessage"] = $loanAmount. " shillings entered successfully as new loan.". "<br>". "Deadline date: ". $deadlineDate
+                                    . "<br>". "Interest rate: ". $interestRate
+                                    . "<br>". "Interest amount: ". $interestAmount
+                                    . "<br>". "Amount to pay: ". $amountPlusInterest;       
                     header("Location:loan.php");                    
                     exit;
                     }else{
@@ -43,5 +52,5 @@
     }
 }
         
-
+ob_get_flush();
     ?>

@@ -1,5 +1,5 @@
 <?php require_once("../include/sessions.php"); 
-$conn = mysqli_connect("localhost", "root", "", "pasodo"); 
+$conn = mysqli_connect("localhost", "root", "pasodomo_oscar", "pasodomo_pasodo"); 
 include('../myHTML/simple_html_dom.php');
 ?>
 

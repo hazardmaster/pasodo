@@ -1,17 +1,19 @@
-<?php $conn = mysqli_connect("localhost", "root", "", "pasodo"); 
- require_once("../include/sessions.php");
-// Validate login
-  if(!isset($_SESSION['userName']) || empty($_SESSION['userName'])){
-    header('location: ../index.php');
-    exit;
-    }
-    
+<?php 
+    $conn = mysqli_connect("localhost", "pasodomo_oscar", "Oscar3296!!!", "pasodomo_pasodo"); 
+    ob_start();
+    require_once("../include/sessions.php");
+    // Validate login
+    if(!isset($_SESSION['userName']) || empty($_SESSION['userName'])){
+        $redirectpage = "../index.php";
+        header('Location: '. $redirectpage);
+        exit;
+        }  
 
-  // DB Credentials
+    // DB Credentials
   define('DB_SERVER', 'localhost');
-  define('DB_USERNAME', 'root');
-  define('DB_PASSWORD', '');
-  define('DB_NAME', 'pasodo');
+  define('DB_USERNAME', 'pasodomo_oscar');
+  define('DB_PASSWORD', 'Oscar3296!!!');
+  define('DB_NAME', 'pasodomo_pasodo');
 
   // Attempt to connect to MySQL with PDO
   try {
@@ -40,13 +42,13 @@
                         if($datarows = $stmt->fetch()){
                             $clientID = $datarows["clientID"];
                             //Start session for the specific ID
-                            session_start();
                             $_SESSION["clientID"] = $clientID;
                             header("Location: loan.php");
+                            exit;
                         }
 
                     }else{
-                        $_SESSION['ErrorMessage'] = "CLient not found";
+                        $_SESSION["ErrorMessage"] = "Client not found";
                         header("Location: index.php");
                         exit;
                     }
@@ -59,11 +61,12 @@
         }         
     
 ?>
+
 <!DOCTYPE>
 
 <html>
     <head>
-        <title>Categories</title>
+        <title>Homepage</title>
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <link rel="stylesheet" href="../css/backend.css">
         <script src="../js/jquery.min.js"></script>
@@ -93,7 +96,7 @@
                         echo SuccessMessage();
                     ?>
                     <!--Input CLient ID to view their Payment details-->
-                    <form style="form-control" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" onsubmit="return validateForm()">
+                    <form style="form-control" action="" method="post" onsubmit="return validateForm()">
                         <div class="form-group">
                             <input type="Number" name="clientID" id="clientID" placeholder="Enter client ID" >                        
                             <input class="btn btn-info btn-large" name="submit" type="submit" value="view client info" >
@@ -125,3 +128,4 @@
     </body>
 
 </html>
+<?php ob_get_flush(); ?>

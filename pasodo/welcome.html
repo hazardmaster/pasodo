@@ -1,39 +1,30 @@
 <!DOCTYPE html>
-<html >
-<style>
-table, th , td  {
-  border: 1px solid grey;
-  border-collapse: collapse;
-  padding: 5px;
-}
-table tr:nth-child(odd) {
-  background-color: #f1f1f1;
-}
-table tr:nth-child(even) {
-  background-color: #ffffff;
-}
-</style>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<html>
+<title>W3.JS</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="https://www.w3schools.com/lib/w3.js"></script>
 <body>
- 
-<div ng-app="myApp" ng-controller="customersCtrl">
- 
-<table>
-  <tr ng-repeat="x in names">
-    <td>{{ x.Name }}</td>
-    <td>{{ x.Country }}</td>
+
+<table id="id01" class="w3-table w3-bordered w3-striped">
+  <tr>
+    <th>Title</th>
+    <th>Artist</th>
+    <th>Country</th>
+  </tr>
+  <tr w3-repeat="records">
+    <td>{{title}}</td>
+    <td>{{artist}}</td>
+    <td>{{country}}</td>
   </tr>
 </table>
- 
-</div>
- 
+
 <script>
-var app = angular.module('myApp', []);
-app.controller('customersCtrl', function($scope, $http) {
-   $http.get("important.php")
-   .then(function (response) {$scope.names = response.data.records;});
-});
+w3.getHttpObject("w3data.php?model=model_cd_from_xml", myFunction);
+
+function myFunction(myObject) {
+  w3.displayObject("id01", myObject);
+}
 </script>
- 
+
 </body>
 </html>

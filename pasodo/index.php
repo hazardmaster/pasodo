@@ -94,8 +94,8 @@
     <div class="row" style="margin-top: 0px">
       <div class="col-md-6 mx-auto">
         <div class="card card-body bg-light mt-5">
-          <h2><i><b>WELCOME TO PASODO</b></i></h2>
-          <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">   
+          <h2><i><b>WELCOME TO PASODO</b></i></h2>          
+          <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">             
             <div class="form-group">
               <label for="userName">User Name</label>
               <input type="userName" name="userName" class="form-control form-control-lg <?php echo (!empty($userName_err)) ? 'is-invalid' : ''; ?>" value="">

@@ -1,5 +1,7 @@
-<?php require_once("../include/sessions.php"); 
-$conn = mysqli_connect("localhost", "root", "", "pasodo"); 
+<?php 
+ob_start();
+require_once("../include/sessions.php"); 
+$conn = mysqli_connect("localhost", "pasodomo_oscar", "Oscar3296!!!", "pasodomo_pasodo"); 
 include('../myHTML/simple_html_dom.php');
 require_once("adminAuthentication.php");
     ?>
@@ -30,13 +32,15 @@ require_once("adminAuthentication.php");
                         <li><a href="transactionapproval.php">Approve transactions</a></li>
                         <li><a href="">Manage administrators</a></li>
                         <li><a href="../Homepage.php">Front end</a></li>
-                    </ul>
+                        <li style="float: right;">
+                            <a href="../include/sessionsDestroy.php?userName=<?php echo $_SESSION['userName']; ?>" class="btn btn-danger btn-large">Logout
+                            </a>
+                        </li>
+                    </ul>                     
                 </div>
                 <div class="col-sm-10">
 
-                     <li style="float: right;">
-                    <a href="../include/sessionsDestroy.php?userName=<?php echo $_SESSION['userName']; ?>" class="btn btn-danger btn-small" style="background-color: green" >Logout
-                    </a>
+
                     <h1>Add New Client</h1>
                     <div> <?php echo message(); 
                                 echo SuccessMessage();
@@ -88,7 +92,7 @@ require_once("adminAuthentication.php");
                                 <!--Client category-->
                                 <div class="form-group">
                                     <label>Categories: </label><br>                                
-                                    <select value = "category" name="category">
+                                    <select value = "category" name="category" style="width:100%; padding: 12px; margin: 8px 0px;">
                                         <?php                                    
                                             $sql = "SELECT * FROM category";
                                             $result = $conn->query($sql);
@@ -98,7 +102,7 @@ require_once("adminAuthentication.php");
                                                     $cat_name = $rows["name"];
                                                     $cat_ID = $rows["ID"];
                                                     ?>                               
-                                        <option><?php echo $cat_name; ?></option>  
+                                        <option style=""><?php echo $cat_name; ?></option>  
                                                    <?php $i++;
                                                             } 
                                                               ?>
@@ -166,3 +170,5 @@ require_once("adminAuthentication.php");
        <?php include("../include/footer.php"); ?>
 
 </html>
+
+<?php ob_get_flush(); ?>

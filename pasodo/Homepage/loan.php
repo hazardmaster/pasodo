@@ -1,5 +1,8 @@
-<?php $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
-<?php require_once("../include/sessions.php");?>
+<?php $conn = mysqli_connect("localhost", "pasodomo_oscar", "Oscar3296!!!", "pasodomo_pasodo"); ?>
+<?php 
+    ob_start();
+    require_once("../include/sessions.php"); 
+?>
 
 <!DOCTYPE>
 
@@ -60,8 +63,7 @@
 
                     <?php
                         echo message();
-                        echo SuccessMessage();
-                    
+                        echo SuccessMessage();                
 
                         //Check client personal Info
                         $clientID = $_SESSION["clientID"];
@@ -83,7 +85,7 @@
                                 <div class="row">
                                     <center>
                                         <?php
-                                        $sqlQuery = "SELECT * FROM client2 WHERE clientID = $clientID";
+                                        $sqlQuery = "SELECT * FROM client2 WHERE clientID = '$clientID'";
                                         $rs = $conn->query($sqlQuery);
                                         $result=mysqli_fetch_array($rs);
                                         echo '<img src="data:image/jpeg;base64,'.base64_encode( stripslashes($result['image']) ).'" width="300" height="300"" />';
@@ -251,4 +253,6 @@
     </body>
 
 </html>
+
+<?php ob_get_flush(); ?>
 

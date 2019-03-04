@@ -1,5 +1,5 @@
 <?php require_once("../include/sessions.php"); 
-$conn = mysqli_connect("localhost", "root", "", "pasodo"); 
+$conn = mysqli_connect("localhost", "root", "pasodomo_oscar", "pasodomo_pasodo"); 
 include('../myHTML/simple_html_dom.php');
 ?>
 
@@ -75,17 +75,17 @@ include('../myHTML/simple_html_dom.php');
                             </div>
 
                             <!--Column showing the total all time loan borrowed-->
-                            <div class="column" style="background-color: orange; margin: 1%">
+                            <div class="column" style="background-color: grey; margin: 1%">
                                 <h3 style="color: white">LOAN(TOTAL)</h3>  
                             </div>
 
                             <!--Column showing all time payments-->
-                            <div class="column" style="background-color: yellow; margin: 1%">                             
+                            <div class="column" style="background-color: grey; margin: 1%">                             
                                 <h3 style="color: white">PAYMENTS(TOTAL)</h3>
                             </div>
 
                             <!--Column showing NET PROFIT. ALL TIME!!-->
-                            <div class="column" style="background-color: blue; margin: 1%">
+                            <div class="column" style="background-color: grey; margin: 1%">
                                  <h3 style="color: white">NET PROFIT</h3>
                             </div>
                         </div> 

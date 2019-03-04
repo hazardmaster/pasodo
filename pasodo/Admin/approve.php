@@ -1,8 +1,9 @@
-<?php $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
-<?php require_once("../include/sessions.php");
-require_once("adminAuthentication.php");
-?>
 <?php 
+ob_start();
+	$conn = mysqli_connect("localhost", "pasodomo_oscar", "Oscar3296!!!", "pasodomo_pasodo");  
+	require_once("../include/sessions.php");
+	require_once("adminAuthentication.php");
+
 	if($conn->connect_error){
 		die("Connection failed: " .$conn->connect_error);
 	}
@@ -17,4 +18,5 @@ require_once("adminAuthentication.php");
 		header('Location: transactionapproval.php');
 		exit;
 	}
+	ob_get_flush();
  ?>

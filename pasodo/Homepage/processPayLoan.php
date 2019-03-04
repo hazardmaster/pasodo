@@ -1,7 +1,7 @@
-<?php $conn = mysqli_connect("localhost", "root", "", "pasodo"); ?>
-<?php require_once("../include/sessions.php");?>
-
 <?php 
+    ob_start();
+    $conn = mysqli_connect("localhost", "pasodomo_oscar", "Oscar3296!!!", "pasodomo_pasodo"); require_once("../include/sessions.php");
+
     $clientID = $_GET["id"];
     if (isset($_POST["submit"])) {
         $loanAmount = $_POST["loanAmount"];
@@ -17,7 +17,7 @@
         $stmt = $conn->prepare("INSERT INTO payments (clientID,amount,created_at,updated_at) VALUES (?,?,?,?)");
         $stmt->bind_param("ssss", $clientID, $loanAmount, $datetime, $datetime);
         if($stmt->execute() === TRUE){
-            $_SESSION["SuccessMessage"] = "Amount entered to successful as new loan";
+            $_SESSION["SuccessMessage"] = $loanAmount. " shillings entered successfully on loan payments";
             header('Location: loan.php');
             exit;
         }else{
@@ -109,3 +109,5 @@
     </body>
 
 </html>
+
+<?php ob_get_flush(); ?>

@@ -2,7 +2,7 @@
     header('location: ../index.php');
     exit;
     }
-if("$_SESSION[userName]" != "admin"){
+if($_SESSION['userName'] != 'admin'){
     $_SESSION["ErrorMessage"] = "You cannot access admin";
     header('location: ../Homepage');
     exit;

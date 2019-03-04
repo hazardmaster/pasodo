@@ -1,5 +1,5 @@
 <?php
-    $conn = mysqli_connect("localhost", "root", "", "pasodo");
+    $conn = mysqli_connect("localhost", "pasodomo_oscar", "Oscar3296!!!", "pasodomo_pasodo");
     require_once("../include/sessions.php");
 require_once("adminAuthentication.php");
 if (isset($_POST["submit"])) {
